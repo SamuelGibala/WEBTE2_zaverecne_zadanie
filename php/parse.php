@@ -33,6 +33,4 @@ function getRandomTask($filename){
         'image' => $tasks['images'][$task_num],
         'equation' => $tasks['equations'][$task_num]
     ];
-
 }
-?>
