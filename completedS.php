@@ -108,9 +108,22 @@ $tests = $stmt->fetch(PDO::FETCH_ASSOC);
 <!--Main layout-->
 <main style="margin-top: 58px">
     <div class="container pt-4">
-
+        <table id="example" class="dataTable display" style="width:100%">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Meno</th>
+                <th>Priezvisko</th>
+                <th>Počet vygenerovaných úloh</th>
+                <th>Počet odovzdaných úloh</th>
+            </tr>
+            </thead>
+        </table>
     </div>
 </main>
+<script>
+
+</script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.js"></script>
 </body>
 </html>
