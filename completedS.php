@@ -7,6 +7,13 @@ if (!isset($_SESSION['email'])) {
     exit();
 }
 
+$conn = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$stmt = $conn->prepare("SELECT * from tests where student_id = :id");
+$stmt->bindParam(':id', $_SESSION['id']);
+$stmt->execute();
+$tests = $stmt->fetch(PDO::FETCH_ASSOC);
+
 ?>
 
 <!doctype html>
