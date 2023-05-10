@@ -16,12 +16,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Validate email and password
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            echo '<script>alert("Invalid email format"); window.location.href = "index.php";</script>';
+            echo '<script>alert("Invalid email format"); window.location.href = "./";</script>';
             exit();
         }
 
-        if (strlen($password) < 4) {
-            echo '<script>alert("Password must be at least 8 characters long"); window.location.href = "index.php";</script>';
+        if (strlen($password) < 6) {
+            echo '<script>alert("Password must be at least 6 characters long"); window.location.href = "./";</script>';
             exit();
         }
 
@@ -48,12 +48,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 header("Location: homeS.php");
             } else {
                 // Invalid role
-                echo '<script>alert("Invalid user role"); window.location.href = "index.php";</script>';
+                echo '<script>alert("Invalid user role"); window.location.href = "./";</script>';
                 exit();
             }
         } else {
             // Login failed
-            echo '<script>alert("Invalid email or password"); window.location.href = "index.php";</script>';
+            echo '<script>alert("Invalid email or password"); window.location.href = "./";</script>';
             exit();
         }
     } catch (PDOException $e) {

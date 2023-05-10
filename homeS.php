@@ -3,7 +3,7 @@ session_start();
 require_once('config.php');
 // Check if user is not logged in
 if (!isset($_SESSION['email'])) {
-    header("Location: index.php");
+    header("Location: ./");
     exit();
 }
 
@@ -87,7 +87,9 @@ if (!isset($_SESSION['email'])) {
             <!-- Right links -->
             <ul class="navbar-nav d-flex flex-row">
                 <!-- Notification dropdown -->
-                    <?php echo $_SESSION['email']?>
+                <li><?php echo $_SESSION['email']?></li>
+                <li style="margin-left: 10px"> <a href="logout.php"><i class="fa-solid fa-right-from-bracket fa-xl" style="color: #cd0a0a;"></i></a> </li>
+
 
             </ul>
         </div>

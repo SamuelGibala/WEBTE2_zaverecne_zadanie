@@ -90,7 +90,9 @@ if (!isset($_SESSION['email'])) {
             <!-- Right links -->
             <ul class="navbar-nav d-flex flex-row">
                 <!-- Notification dropdown -->
-                <?php echo $_SESSION['email']?>
+                <li><?php echo $_SESSION['email']?></li>
+                <li> <a href="index.php"><i class="fa-solid fa-right-from-bracket"></i></a> </li>
+
 
             </ul>
         </div>

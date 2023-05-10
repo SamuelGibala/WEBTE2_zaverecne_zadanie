@@ -1,3 +1,13 @@
+<?php
+session_start();
+if (isset($_SESSION['email'])){
+    if ($_SESSION['role'] === "teacher") {
+        header("Location: homeT.php");
+    } elseif ($_SESSION['role'] === "student") {
+        header("Location: homeS.php");
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="sk">
 <head>
