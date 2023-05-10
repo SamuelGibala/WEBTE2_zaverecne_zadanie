@@ -1,5 +1,10 @@
 <?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 session_start();
+$detail_id = $_GET["id"];
 require_once('config.php');
 // Check if user is not logged in
 if (!isset($_SESSION['email'])) {
@@ -7,18 +12,17 @@ if (!isset($_SESSION['email'])) {
     exit();
 }
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-require_once("config.php");
 try {
     $db = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $query = "SELECT  id, email, name, surname, numbergeneratetask,numbersubmittask FROM users WHERE role = 'student'";
+    $query = "SELECT  email, name, surname, numbergeneratetask,numbersubmittask, id as u_id FROM users WHERE role = 'student'";
     $stm = $db->query($query);
     $rows = $stm->fetchAll(PDO::FETCH_ASSOC);
 
+    $query = "SELECT * FROM users u WHERE u.id =" . $detail_id;
+    $stmt = $db->query($query);
+    $person = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
@@ -64,8 +68,8 @@ try {
                     <span>Vygenerovanie úloh</span>
                 </a>
                 <a
-                    href="#"
-                    class="list-group-item list-group-item-action py-2 ripple active"
+                    href="./completedT.php"
+                    class="list-group-item list-group-item-action py-2 ripple "
                 >
                     <i class="fa-solid fa-list"></i>
                     <span>Zoznam študentov</span>
@@ -124,50 +128,38 @@ try {
 <!--Main layout-->
 <main style="margin-top: 58px">
     <div class="container pt-4">
-        <h2>Zoznam študentov</h2>
-       <table id="example" class="dataTable display" style="width:100%">
+        <h2>Detail Študenta</h2>
+        <div class="pageElement">
+            <div class="formLogin2 table-responsive" id="specs">
+                <table class="table table-borderless myTable">
+                    <tr><th>Meno: </th> <td><?php echo ($person[0]['name']);?></td></tr>
+                    <tr><th>Priezvisko: </th> <td><?php echo $person[0]['surname'];?></td></tr>
+                    <tr><th>Email: </th> <td><?php echo $person[0]['email'];?></td></tr>
+                    <tr><th>Typ: </th> <td><?php echo $person[0]['role'];?></td></tr>
+                </table>
+            </div>
+        </div>
+        <h2>Zoznam štedentov</h2>
+        <table id="example" class="dataTable display" style="width:100%">
             <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Meno</th>
-                    <th>Priezvisko</th>
-                    <th>Počet vygenerovaných úloh</th>
-                    <th>Počet odovzdaných úloh</th>
-                </tr>
+            <tr>
+                <th>ID</th>
+                <th>Meno</th>
+                <th>Priezvisko</th>
+                <th>Počet vygenerovaných úloh</th>
+                <th>Počet odovzdaných úloh</th>
+            </tr>
             </thead>
-           <tbody>
-               <?php
-                   foreach ($rows as $row)
-                   {
-                   echo("<tr><td>{$row['id']}</td> <td>{$row['name']}</td> <td>{$row['surname']}</td><td>{$row['email']}</td><td>{$row['email']}</td> </tr> ");
-                   }
-               ?>
-           </tbody>
+            <tbody>
+            <?php
+            foreach ($rows as $row)
+            {
+                echo("<tr><td>{$row['u_id']}</td> <td>{$row['name']}</td> <td>{$row['surname']}</td><td>{$row['email']}</td><td>{$row['email']}</td> </tr> ");
+            }
+            ?>
+            </tbody>
         </table>
     </div>
 </main>
-
-<script>
-    <?php
-    $js_array = json_encode($rows);
-    echo "var data = ". $js_array . ";\n";
-    ?>
-    $(document).ready( function () {
-        table = $('#example').DataTable({
-            order: [[3, 'asc']],
-            "lengthChange": true,
-            "pageLength": 10,
-            "pagingType": "full_numbers",
-            "searching": true,
-            "bInfo" : false
-        });
-    });
-    $('#example tbody').on('click', 'tr', function() {
-        var data = table.row(this).data();
-        var id = data[0]; // Assuming the ID is in the first column
-        console.log(id);
-        window.location.href = "detail.php?id=" + id;
-    });
-</script>
 </body>
 </html>
