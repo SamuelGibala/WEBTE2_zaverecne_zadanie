@@ -35,12 +35,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Login successful
             $_SESSION['email'] = $email;
 
-            $stmt = $conn->prepare("SELECT role FROM users WHERE email = :email");
+            $stmt = $conn->prepare("SELECT id,role FROM users WHERE email = :email");
             $stmt->bindParam(':email', $email);
             $stmt->execute();
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             $role = $row['role'];
+            $id = $row['id'];
             $_SESSION['role'] = $role;
+            $_SESSION['id'] = $id;
 
             if ($_SESSION['role'] === "teacher") {
                 header("Location: homeT.php");
