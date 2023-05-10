@@ -3,7 +3,7 @@ session_start();
 require_once('config.php');
 // Check if user is not logged in
 if (!isset($_SESSION['email'])) {
-    header("Location: index.php");
+    header("Location: ./");
     exit();
 }
 
@@ -38,14 +38,14 @@ if (!isset($_SESSION['email'])) {
                         aria-current="true"
                 >
                     <i class="fa-solid fa-pen"></i>
-                    <span>Priradené úlohy</span>
+                    <span>Vygenerovanie úloh</span>
                 </a>
                 <a
-                        href="#"
+                        href="./completedT.php"
                         class="list-group-item list-group-item-action py-2 ripple"
                 >
-                    <i class="fa-solid fa-list"></i>
-                    <span>Vypracované úlohy</span>
+                    <i class="fa-solid fa-table"></i>
+                    <span>Zoznam študentov</span>
                 </a>
             </div>
         </div>
@@ -82,7 +82,7 @@ if (!isset($_SESSION['email'])) {
             </a>
 
             <div style="margin: 0 auto">
-                VYTVORENIE TESTOV
+                TESTY
             </div>
 
 
@@ -91,7 +91,7 @@ if (!isset($_SESSION['email'])) {
             <ul class="navbar-nav d-flex flex-row">
                 <!-- Notification dropdown -->
                 <li><?php echo $_SESSION['email']?></li>
-                <li> <a href="index.php"><i class="fa-solid fa-right-from-bracket"></i></a> </li>
+                <li style="margin-left: 10px"> <a href="logout.php"><i class="fa-solid fa-right-from-bracket fa-xl" style="color: #cd0a0a;"></i></a> </li>
 
 
             </ul>
