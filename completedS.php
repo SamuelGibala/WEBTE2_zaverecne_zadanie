@@ -30,16 +30,16 @@ if (!isset($_SESSION['email'])) {
         <div class="position-sticky">
             <div class="list-group list-group-flush mx-3 mt-4">
                 <a
-                        href="#"
-                        class="list-group-item list-group-item-action py-2 ripple active"
+                        href="./homeS.php"
+                        class="list-group-item list-group-item-action py-2 ripple"
                         aria-current="true"
                 >
                     <i class="fa-solid fa-pen"></i>
                     <span>Priradené úlohy</span>
                 </a>
                 <a
-                        href="./completedS.php"
-                        class="list-group-item list-group-item-action py-2 ripple"
+                        href="#"
+                        class="list-group-item list-group-item-action py-2 ripple active"
                 >
                     <i class="fa-solid fa-list"></i>
                     <span>Vypracované úlohy</span>
@@ -87,7 +87,7 @@ if (!isset($_SESSION['email'])) {
             <!-- Right links -->
             <ul class="navbar-nav d-flex flex-row">
                 <!-- Notification dropdown -->
-                    <?php echo $_SESSION['email']?>
+                <?php echo $_SESSION['email']?>
 
             </ul>
         </div>
