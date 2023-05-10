@@ -8,39 +8,104 @@ if (!isset($_SESSION['email'])) {
 }
 
 ?>
-
-<html>
+<!doctype html>
+<html lang="sk">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Home Page</title>
     <!-- Bootstrap CSS -->
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-        }
-
-        .container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-<div class="container">
-    <div class="row">
-        <div class="col-md-4">
-            <h2>Welcome <?php echo $_SESSION['email']; ?></h2>
-            <h3>Role: <?php echo $_SESSION['role']; ?></h3>
-            <p>si prihlaseny ako ucitel</p>
-            <a href="logout.php">Logout</a>
+<header>
+    <!-- Sidebar -->
+    <nav
+            id="sidebarMenu"
+            class="collapse d-lg-block sidebar collapse bg-white"
+    >
+        <div class="position-sticky">
+            <div class="list-group list-group-flush mx-3 mt-4">
+                <a
+                        href="#"
+                        class="list-group-item list-group-item-action py-2 ripple active"
+                        aria-current="true"
+                >
+                    <i class="fa-solid fa-pen"></i>
+                    <span>Priradené úlohy</span>
+                </a>
+                <a
+                        href="#"
+                        class="list-group-item list-group-item-action py-2 ripple"
+                >
+                    <i class="fa-solid fa-list"></i>
+                    <span>Vypracované úlohy</span>
+                </a>
+            </div>
         </div>
+    </nav>
+    <!-- Sidebar -->
+
+    <!-- Navbar -->
+    <nav
+            id="main-navbar"
+            class="navbar navbar-expand-lg navbar-light bg-white fixed-top"
+    >
+        <!-- Container wrapper -->
+        <div class="container-fluid">
+            <!-- Toggle button -->
+            <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-mdb-toggle="collapse"
+                    data-mdb-target="#sidebarMenu"
+                    aria-controls="sidebarMenu"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+            >
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <a class="navbar-brand" href="#">
+                <img
+                        src="https://am2023.sski.sk/wp-content/uploads/2023/01/feistu.png"
+                        height="40"
+                        alt=""
+                        loading="lazy"
+                />
+            </a>
+
+            <div style="margin: 0 auto">
+                VYTVORENIE TESTOV
+            </div>
+
+
+
+            <!-- Right links -->
+            <ul class="navbar-nav d-flex flex-row">
+                <!-- Notification dropdown -->
+                <?php echo $_SESSION['email']?>
+
+            </ul>
+        </div>
+        <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+</header>
+<!--Main Navigation-->
+
+<!--Main layout-->
+<main style="margin-top: 58px">
+    <div class="container pt-4">
+
     </div>
-</div>
+</main>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.js"></script>
 </body>
 </html>
