@@ -26,6 +26,17 @@ $tests = $stmt->fetch(PDO::FETCH_ASSOC);
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.css" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="./css/style.css">
+    <style>
+        .accordion-card {
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .accordion-card .card-header {
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
 <header>
@@ -103,26 +114,60 @@ $tests = $stmt->fetch(PDO::FETCH_ASSOC);
     </nav>
     <!-- Navbar -->
 </header>
-<!--Main Navigation-->
 
-<!--Main layout-->
 <main style="margin-top: 58px">
-    <div class="container pt-4">
-        <table id="example" class="dataTable display" style="width:100%">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Meno</th>
-                <th>Priezvisko</th>
-                <th>Počet vygenerovaných úloh</th>
-                <th>Počet odovzdaných úloh</th>
-            </tr>
-            </thead>
-        </table>
+    <div class="container">
+        <h2>Accordion Example</h2>
+        <hr>
+        <div id="accordion">
+        </div>
     </div>
 </main>
 <script>
+    <?php echo "var itemCount = " . count($tests) . ";"; ?>
+    var accordionContainer = document.getElementById('accordion');
+    accordionContainer.innerHTML = '';
 
+    for (var i = 1; i <= itemCount; i++) {
+        var item = document.createElement('div');
+        item.className = 'accordion-card';
+
+        var header = document.createElement('div');
+        header.className = 'card-header';
+        header.id = 'heading' + i;
+
+        var title = document.createElement('h5');
+        title.className = 'mb-0';
+
+        var button = document.createElement('button');
+        button.className = 'btn btn-link';
+        button.setAttribute('data-bs-toggle', 'collapse');
+        button.setAttribute('data-bs-target', '#collapse' + i);
+        button.setAttribute('aria-expanded', 'false');
+        button.setAttribute('aria-controls', 'collapse' + i);
+        button.innerText = 'Item ' + i; //TODO: Nahradiť úloha+body
+
+        title.appendChild(button);
+        header.appendChild(title);
+
+        var content = document.createElement('div');
+        content.id = 'collapse' + i;
+        content.className = 'collapse';
+        content.setAttribute('aria-labelledby', 'heading' + i);
+        content.setAttribute('data-bs-parent', '#accordion');
+
+        var body = document.createElement('div');
+        body.className = 'card-body';
+        body.innerText = 'Content for Item ' + i; //TODO: Zobraziť task + result + student result
+
+        content.appendChild(body);
+
+        item.appendChild(header);
+        item.appendChild(content);
+
+        accordionContainer.appendChild(item);
+    }
+    })
 </script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.js"></script>
 </body>

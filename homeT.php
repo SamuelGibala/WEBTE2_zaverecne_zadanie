@@ -44,7 +44,7 @@ if (!isset($_SESSION['email'])) {
                         href="./completedT.php"
                         class="list-group-item list-group-item-action py-2 ripple"
                 >
-                    <i class="fa-solid fa-table"></i>
+                    <i class="fa-solid fa-list"></i>
                     <span>Zoznam študentov</span>
                 </a>
             </div>
