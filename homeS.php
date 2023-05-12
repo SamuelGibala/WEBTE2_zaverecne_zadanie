@@ -14,12 +14,12 @@ $conn = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-$stmt = $conn->prepare("select * from task_set where id not in (select set_id from tests where student_id = :id) and term_start <= now() and deadline >= now()");
+$stmt = $conn->prepare("select * from task_set where id not in (select set_id from tests where student_id = :id) and ((term_start <= now() or term_start is null) and (deadline >= now() or deadline is null))");
 $stmt->bindParam(':id', $_SESSION['id']);
 $stmt->execute();
 $sets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$stmt = $conn->prepare("select tests.id as 'id',ts.task_name as 'task_name' from tests join task_set ts on ts.id = tests.set_id where tests.student_id= :id and term_start <= now() and deadline >= now() and tests.student_result is null");
+$stmt = $conn->prepare("select tests.id as 'id',ts.task_name as 'task_name' from tests join task_set ts on ts.id = tests.set_id where tests.student_id= :id and ((term_start <= now() or term_start is null) and (deadline >= now() or deadline is null)) and tests.student_result is null");
 $stmt->bindParam(':id', $_SESSION['id']);
 $stmt->execute();
 $incompleted = $stmt->fetchAll(PDO::FETCH_ASSOC);
