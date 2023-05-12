@@ -122,32 +122,51 @@ $incompleted = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="container">
         <div class="container-fluid">
             <h3>Dostupné testy</h3>
+            <hr />
             <ul class="list-group">
                 <?php
-                foreach ($sets as $set){
+                if (count($sets) == 0) {
                     echo '<li class="list-group-item d-flex justify-content-between align-items-center">
                     <div>
-                        <h5>'.$set['task_name'].'</h5>
+                        <h5>Žiadne testy nie sú dostupné</h5>
                     </div>
-                    <div>
-                        <form action="./generate.php" method="post"><input type="hidden" name="set_id" value="'.$set['id'].'"><button type="submit" class="btn btn-primary">Generovať</button></form>
-                    </div></li>';
+                    </li>';
+                }else {
+                    foreach ($sets as $set) {
+                        echo '<li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5>' . $set['task_name'] . '</h5>
+                        </div>
+                        <div>
+                            <form action="./generate.php" method="post"><input type="hidden" name="set_id" value="' . $set['id'] . '"><button type="submit" class="btn btn-primary">Generovať</button></form>
+                        </div></li>';
+                    }
                 }
                 ?>
             </ul>
         </div>
+        <br />
         <div class="container-fluid">
             <h3>Testy na vypracovanie</h3>
+            <hr />
             <ul class="list-group">
                 <?php
-                foreach ($incompleted as $item){
+                if (count($incompleted) == 0) {
                     echo '<li class="list-group-item d-flex justify-content-between align-items-center">
                     <div>
-                        <h5>'.$item['task_name'].'</h5>
+                        <h5>Žiadne testy nie sú dostupné</h5>
                     </div>
-                    <div>
-                        <form action="./solve.php" method="post"><input type="hidden" name="id" value="'.$item['id'].'"><button type="submit" class="btn btn-primary">Vypracovať</button></form>
-                    </div></li>';
+                    </li>';
+                }else {
+                    foreach ($incompleted as $item) {
+                        echo '<li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5>' . $item['task_name'] . '</h5>
+                        </div>
+                        <div>
+                            <form action="./solve.php" method="post"><input type="hidden" name="id" value="' . $item['id'] . '"><button type="submit" class="btn btn-primary">Vypracovať</button></form>
+                        </div></li>';
+                    }
                 }
                 ?>
             </ul>

@@ -1,5 +1,8 @@
 <?php
 session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 require_once('config.php');
 // Check if user is not logged in
 if (!isset($_SESSION['email'])) {
@@ -9,10 +12,12 @@ if (!isset($_SESSION['email'])) {
 
 $conn = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-$stmt = $conn->prepare("SELECT * from tests where student_id = :id");
+
+$stmt = $conn->prepare("select tests.id as 'id', ts.task_name as 'task_name' from tests join task_set ts on ts.id = tests.set_id where student_id= :id and student_result is not null");
 $stmt->bindParam(':id', $_SESSION['id']);
 $stmt->execute();
-$tests = $stmt->fetch(PDO::FETCH_ASSOC);
+$tests = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 
 ?>
 
@@ -115,11 +120,35 @@ $tests = $stmt->fetch(PDO::FETCH_ASSOC);
     <!-- Navbar -->
 </header>
 
-<main style="margin-top: 58px">
+<main style="margin-top: 70px">
     <div class="container">
-        <h2>Accordion Example</h2>
-        <hr>
-        <div class="accordion" id="accordionExample">
+        <div class="container-fluid">
+            <h3>Vypracované testy</h3>
+            <hr />
+            <ul class="list-group">
+                <?php
+                if (count($tests) == 0){
+                    echo '<li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5>Žiadne vypracované testy</h5>
+                    </div>
+                    </li>';
+                } else {
+                    foreach ($tests as $item) {
+                        echo '<li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5>' . $item['task_name'] . '</h5>
+                        </div>
+                        <div>
+                            <form action="./check.php" method="post">
+                                <input type="hidden" name="id" value="' . $item['id'] . '">
+                                <button type="submit" class="btn btn-primary">Nahliadnuť</button>
+                            </form>
+                        </div></li>';
+                    }
+                }
+                ?>
+            </ul>
         </div>
     </div>
 </main>
