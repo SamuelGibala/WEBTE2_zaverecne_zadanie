@@ -27,8 +27,7 @@ if (isset($_POST['set_id'])) {
         $arr[] = $checkboxValue;
     }
     $task = getRandomTask($arr);
-//    echo $_POST['set'] . PHP_EOL;
-    echo json_encode($task);
+    sleep(10);
     $stmt = $conn->prepare("insert into tests (student_id, task, task_image, task_result, set_id) values (?, ?, ?, ?, ?)");
     $stmt->execute([$_SESSION['id'],$task['task'],$task['image'],$task['equation'], $_POST['set']]);
     header("Location: ./");
@@ -148,24 +147,48 @@ if (isset($_POST['set_id'])) {
 <!--Main layout-->
 <main style="margin-top: 50px">
     <div class="container pt-4">
-        <form method="post" action="#">
-            <?php
-            // Loop through the array to create checkboxes
-            foreach ($set_tasks as $task) {
-                $checkboxName = $task['file_name'];
-                $checkboxId = $task['id'];
-
-                echo '<input type="checkbox" value = "' . $checkboxName . '" name="checkbox[]" id="' . $checkboxId . '">';
-                echo '<label for="' . $checkboxId . '">' . $checkboxName . '</label><br>';
-            }
-            ?>
-            <input type="number" hidden name="set" value="<?php echo $_POST['set_id']?>">
-            <button type="submit" class="btn btn-primary">Odoslat</button>
-        </form>
+        <h3>Generovanie testu</h3>
+        <hr />
+        <div class="container ms-4 mt-4">
+            <p>Označ súbor(y), z ktorých chceš generovať test</p>
+            <form method="post" action="#" onsubmit="return validateForm();">
+                <?php
+                // Loop through the array to create checkboxes
+                foreach ($set_tasks as $task) {
+                    $checkboxName = $task['file_name'];
+                    $checkboxId = $task['id'];
+                    echo '<div class="form-check d-flex justify-content-left mb-4">';
+                    echo '<input type="checkbox" class="form-check-input me-2" value = "' . $checkboxName . '" name="checkbox[]" id="' . $checkboxId . '">';
+                    echo '<label for="' . $checkboxId . '" class="form-check-label">' . $checkboxName . '</label><br>';
+                    echo '</div>';
+                }
+                ?>
+                <input type="number" hidden name="set" value="<?php echo $_POST['set_id']?>">
+                <button type="submit" class="btn btn-primary">Generuj</button>
+            </form>
+        </div>
     </div>
 </main>
 <script>
+    function validateForm() {
+        // Get all the checkboxes
+        var checkboxes = document.getElementsByName('checkbox[]');
 
+        // Check if at least one checkbox is checked
+        var isChecked = false;
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                isChecked = true;
+                break;
+            }
+        }
+
+        // Display an alert if no checkbox is checked
+        if (!isChecked) {
+            alert("Zaškrtni aspoň jedno políčko!");
+            return false; // Prevent form submission
+        }
+    }
 </script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.js"></script>
 </body>

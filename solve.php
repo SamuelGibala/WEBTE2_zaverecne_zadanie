@@ -206,7 +206,7 @@ if (isset($_POST['id'])) {
         <div class="mx-0 mx-sm-auto">
             <div class="card">
                 <div class="card-body">
-                    <form action="#" method="post">
+                    <form action="#" method="post" onsubmit="return validateForm();">
                     <div class="text-center">
                         <p>
                             <strong><?php echo $test['task']?></strong>
@@ -252,6 +252,13 @@ if (isset($_POST['id'])) {
 // `ev.target` is an instance of `MathfieldElement`
         area.value = ev.target.value;
     });
+
+    function validateForm(){
+        if (area.value.trim() === ""){
+            alert("Vyplňte riešenie");
+            return false;
+        }
+    }
 </script>
 <script>
     MathJax = {
