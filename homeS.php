@@ -16,6 +16,11 @@ $stmt->bindParam(':id', $_SESSION['id']);
 $stmt->execute();
 $sets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+$stmt = $conn->prepare("select tests.id as 'id',ts.task_name as 'task_name' from tests join task_set ts on ts.id = tests.set_id where tests.student_id= :id and term_start <= now() and deadline >= now() and tests.student_result is null");
+$stmt->bindParam(':id', $_SESSION['id']);
+$stmt->execute();
+$incompleted = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 
 ?>
 
@@ -110,59 +115,43 @@ $sets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!--Main Navigation-->
 
 <!--Main layout-->
-<main style="margin-top: 58px">
+<main style="margin-top: 70px">
     <div class="container">
-        <h2>Accordion Example</h2>
-        <hr>
-        <div id="accordion">
+        <div class="container-fluid">
+            <h3>Dostupné testy</h3>
+            <ul class="list-group">
+                <?php
+                foreach ($sets as $set){
+                    echo '<li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5>'.$set['task_name'].'</h5>
+                    </div>
+                    <div>
+                        <form action="./generate.php" method="post"><input type="hidden" name="set_id" value="'.$set['id'].'"><button type="submit" class="btn btn-primary">Generovať</button></form>
+                    </div></li>';
+                }
+                ?>
+            </ul>
+        </div>
+        <div class="container-fluid">
+            <h3>Testy na vypracovanie</h3>
+            <ul class="list-group">
+                <?php
+                foreach ($incompleted as $item){
+                    echo '<li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5>'.$item['task_name'].'</h5>
+                    </div>
+                    <div>
+                        <form action="./solve.php" method="post"><input type="hidden" name="id" value="'.$item['id'].'"><button type="submit" class="btn btn-primary">Vypracovať</button></form>
+                    </div></li>';
+                }
+                ?>
+            </ul>
         </div>
     </div>
 </main>
 <script>
-    <?php echo "var itemCount = " . count($sets) . ";"; ?>
-    <?php echo "console.log(" . json_encode($sets) . ");"; ?>
-    var accordionContainer = document.getElementById('accordion');
-    accordionContainer.innerHTML = '';
-
-    for (var i = 1; i <= itemCount; i++) {
-        var item = document.createElement('div');
-        item.className = 'accordion-card';
-
-        var header = document.createElement('div');
-        header.className = 'card-header';
-        header.id = 'heading' + i;
-
-        var title = document.createElement('h5');
-        title.className = 'mb-0';
-
-        var button = document.createElement('button');
-        button.className = 'btn btn-link';
-        button.setAttribute('data-bs-toggle', 'collapse');
-        button.setAttribute('data-bs-target', '#collapse' + i);
-        button.setAttribute('aria-expanded', 'false');
-        button.setAttribute('aria-controls', 'collapse' + i);
-        button.innerText = 'Item ' + i; //TODO: Nahradiť úloha+body
-
-        title.appendChild(button);
-        header.appendChild(title);
-
-        var content = document.createElement('div');
-        content.id = 'collapse' + i;
-        content.className = 'collapse';
-        content.setAttribute('aria-labelledby', 'heading' + i);
-        content.setAttribute('data-bs-parent', '#accordion');
-
-        var body = document.createElement('div');
-        body.className = 'card-body';
-        body.innerText = 'Content for Item ' + i; //TODO: Zobraziť task + result + student result
-
-        content.appendChild(body);
-
-        item.appendChild(header);
-        item.appendChild(content);
-
-        accordionContainer.appendChild(item);
-    }
 
 </script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.js"></script>

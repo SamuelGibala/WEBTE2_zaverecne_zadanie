@@ -1,5 +1,9 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 session_start();
+require 'parse.php';
 require_once('config.php');
 // Check if user is not logged in
 if (!isset($_SESSION['email'])) {
@@ -9,12 +13,35 @@ if (!isset($_SESSION['email'])) {
 
 $conn = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-$stmt = $conn->prepare("SELECT * from tests where student_id = :id");
-$stmt->bindParam(':id', $_SESSION['id']);
-$stmt->execute();
-$tests = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (isset($_POST['set_id'])) {
+    $stmt = $conn->prepare("select * from task where set_id = :id");
+    $stmt->bindParam(':id', $_POST['set_id']);
+    $stmt->execute();
+    $set_tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} elseif (isset($_POST['checkbox'])) {
+    $checkedCheckboxes = $_POST['checkbox'];
+    $arr = array();
+    // Loop through the checked checkboxes and echo their values
+    foreach ($checkedCheckboxes as $checkboxValue) {
+        $arr[] = $checkboxValue;
+    }
+    $task = getRandomTask($arr);
+//    echo $_POST['set'] . PHP_EOL;
+    echo json_encode($task);
+    $stmt = $conn->prepare("insert into tests (student_id, task, task_image, task_result, set_id) values (?, ?, ?, ?, ?)");
+    $stmt->execute([$_SESSION['id'],$task['task'],$task['image'],$task['equation'], $_POST['set']]);
+    header("Location: ./");
+    exit();
+
+}else {
+    header("Location: ./");
+    exit();
+}
 
 ?>
+
+
 
 <!doctype html>
 <html lang="sk">
@@ -26,17 +53,18 @@ $tests = $stmt->fetch(PDO::FETCH_ASSOC);
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.css" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="./css/style.css">
-    <style>
-        .accordion-card {
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 10px;
-        }
-
-        .accordion-card .card-header {
-            border-radius: 10px;
-        }
-    </style>
+</head>
+<body>
+<!doctype html>
+<html lang="sk">
+<head>
+    <title>Home Page</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
 <header>
@@ -48,7 +76,7 @@ $tests = $stmt->fetch(PDO::FETCH_ASSOC);
         <div class="position-sticky">
             <div class="list-group list-group-flush mx-3 mt-4">
                 <a
-                        href="./homeS.php"
+                        href="./"
                         class="list-group-item list-group-item-action py-2 ripple"
                         aria-current="true"
                 >
@@ -56,8 +84,8 @@ $tests = $stmt->fetch(PDO::FETCH_ASSOC);
                     <span>Priradené úlohy</span>
                 </a>
                 <a
-                        href="#"
-                        class="list-group-item list-group-item-action py-2 ripple active"
+                        href="./completedS.php"
+                        class="list-group-item list-group-item-action py-2 ripple"
                 >
                     <i class="fa-solid fa-list"></i>
                     <span>Vypracované úlohy</span>
@@ -108,61 +136,35 @@ $tests = $stmt->fetch(PDO::FETCH_ASSOC);
                 <li><?php echo $_SESSION['email']?></li>
                 <li style="margin-left: 10px"> <a href="logout.php"><i class="fa-solid fa-right-from-bracket fa-xl" style="color: #cd0a0a;"></i></a> </li>
 
+
             </ul>
         </div>
         <!-- Container wrapper -->
     </nav>
     <!-- Navbar -->
 </header>
+<!--Main Navigation-->
 
-<main style="margin-top: 58px">
+<!--Main layout-->
+<main style="margin-top: 80px">
     <div class="container">
-        <h2>Accordion Example</h2>
-        <hr>
-        <div class="accordion" id="accordionExample">
-        </div>
+        <form method="post" action="#">
+            <?php
+            // Loop through the array to create checkboxes
+            foreach ($set_tasks as $task) {
+                $checkboxName = $task['file_name'];
+                $checkboxId = $task['id'];
+
+                echo '<input type="checkbox" value = "' . $checkboxName . '" name="checkbox[]" id="' . $checkboxId . '">';
+                echo '<label for="' . $checkboxId . '">' . $checkboxName . '</label><br>';
+            }
+            ?>
+            <input type="number" hidden name="set" value="<?php echo $_POST['set_id']?>">
+            <button type="submit" class="btn btn-primary">Odoslat</button>
+        </form>
     </div>
 </main>
 <script>
-    <?php echo "var itemCount = " . count($tests) . ";"; ?>
-    var accordionContainer = document.getElementById('accordionExample');
-    accordionContainer.innerHTML = '';
-
-    for (var i = 1; i <= itemCount; i++) {
-        var item = document.createElement('div');
-        item.className = 'accordion-item';
-
-        var header = document.createElement('h2');
-        header.className = 'accordion-header';
-        header.id = 'heading' + i;
-
-        var button = document.createElement('button');
-        button.className = 'accordion-button collapsed';
-        button.setAttribute('data-bs-toggle', 'collapse');
-        button.setAttribute('data-bs-target', '#collapse' + i);
-        button.setAttribute('aria-expanded', 'false');
-        button.setAttribute('aria-controls', 'collapse' + i);
-        button.innerText = 'Item ' + i; //TODO: Nahradiť úloha+body
-
-        header.appendChild(button);
-
-        var content = document.createElement('div');
-        content.id = 'collapse' + i;
-        content.className = 'accordion-collapse collapse';
-        content.setAttribute('aria-labelledby', 'heading' + i);
-        content.setAttribute('data-bs-parent', '#accordionExample');
-
-        var body = document.createElement('div');
-        body.className = 'accordion-body';
-        body.innerText = 'Content for Item ' + i; //TODO: Zobraziť task + result + student result
-
-        content.appendChild(body);
-
-        item.appendChild(header);
-        item.appendChild(content);
-
-        accordionContainer.appendChild(item);
-    }
 
 </script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.js"></script>

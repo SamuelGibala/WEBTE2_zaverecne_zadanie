@@ -25,9 +25,16 @@ function parseLatexFile($filename) {
 }
 
 function getRandomTask($filename){
-    $tasks = parseLatexFile($filename);
+    $countFiles = count($filename);
+    echo $countFiles . "<br>";
+    $random = rand(0,$countFiles-1);
+    echo $random . "<br>";
+    $file_name = $filename[$random];
+    $file_name = "./zadania/" . $file_name;
+    echo $file_name . "<br>";
+    $tasks = parseLatexFile($file_name);
     $tasksCount = count($tasks['tasks']);
-    $task_num = rand(0,$tasksCount);
+    $task_num = rand(0,$tasksCount-1);
     return [
         'task' => $tasks['tasks'][$task_num],
         'image' => $tasks['images'][$task_num],
