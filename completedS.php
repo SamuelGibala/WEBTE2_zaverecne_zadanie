@@ -120,8 +120,8 @@ $tests = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- Navbar -->
 </header>
 
-<main style="margin-top: 70px">
-    <div class="container">
+<main style="margin-top: 50px">
+    <div class="container pt-4">
         <div class="container-fluid">
             <h3>Vypracované testy</h3>
             <hr />

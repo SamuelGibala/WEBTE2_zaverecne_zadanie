@@ -40,7 +40,6 @@ try {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Home Page</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.css" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css">
@@ -53,6 +52,7 @@ try {
     <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/table.css">
 </head>
@@ -71,7 +71,7 @@ try {
                     aria-current="true"
                 >
                     <i class="fa-solid fa-pen"></i>
-                    <span>Vygenerovanie úloh</span>
+                    <span>Generovanie úloh</span>
                 </a>
                 <a
                     href="#"
@@ -132,9 +132,10 @@ try {
 </header>
 <!--Main Navigation-->
 <!--Main layout-->
-<main style="margin-top: 58px">
+<main style="margin-top: 50px">
     <div class="container pt-4">
         <h2>Zoznam študentov</h2>
+        <hr />
        <table id="example" class="dataTable display" style="width:100%">
             <thead>
                 <tr>

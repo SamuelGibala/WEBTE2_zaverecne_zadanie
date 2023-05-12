@@ -146,8 +146,8 @@ if (isset($_POST['set_id'])) {
 <!--Main Navigation-->
 
 <!--Main layout-->
-<main style="margin-top: 80px">
-    <div class="container">
+<main style="margin-top: 50px">
+    <div class="container pt-4">
         <form method="post" action="#">
             <?php
             // Loop through the array to create checkboxes

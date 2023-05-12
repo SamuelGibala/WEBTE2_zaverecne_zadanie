@@ -118,8 +118,8 @@ $incompleted = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!--Main Navigation-->
 
 <!--Main layout-->
-<main style="margin-top: 70px">
-    <div class="container">
+<main style="margin-top: 50px">
+    <div class="container pt-4">
         <div class="container-fluid">
             <h3>Dostupné testy</h3>
             <hr />

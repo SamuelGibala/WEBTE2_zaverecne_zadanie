@@ -134,8 +134,8 @@ if (isset($_POST['id'])) {
 
 
 <!--Main layout-->
-<main style="margin-top: 70px">
-    <div class="container-md">
+<main style="margin-top: 50px">
+    <div class="container pt-4">
         <div class="mx-0 mx-sm-auto">
             <div class="card">
                 <div class="card-body">
