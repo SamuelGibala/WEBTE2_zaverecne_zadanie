@@ -29,15 +29,24 @@ if (isset($_SESSION['email'])){
               left: 50%;
               transform: translate(-50%, -50%);
           }
+          .row {
+              position: relative;
+              display: flex;
+              justify-content: center;
+          }
+
+          .col-md-4 {
+              max-width: 300px; /* Optional: Set a max width for the column */
+          }
       </style>
 </head>
 <body>
 <div class="container">
     <div class="row">
-        <hgroup>
-            <h1>Login</h1>
-        </hgroup>
         <div class="col-md-4">
+            <hgroup>
+                <h1>Login</h1>
+            </hgroup>
             <form method="post" action="process_login.php">
                 <!-- Email input -->
                 <div class="form-outline mb-4">
