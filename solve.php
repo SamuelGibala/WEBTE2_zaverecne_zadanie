@@ -1,5 +1,8 @@
 <?php
 session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 require_once('config.php');
 // Check if user is not logged in
 if (!isset($_SESSION['email'])) {
@@ -30,6 +33,20 @@ function sendPostRequest($url, $jsonData) {
     return $apiResult;
 }
 
+function addBackslash($string) {
+    $result = '';
+    $length = strlen($string);
+
+    for ($i = 0; $i < $length; $i++) {
+        if ($string[$i] === '\\') {
+            $result .= '\\';
+        }
+        $result .= $string[$i];
+    }
+
+    return $result;
+}
+
 if (isset($_POST['id'])) {
     $stmt = $conn->prepare("select * from tests where id = :id");
     $stmt->bindParam(':id', $_POST['id']);
@@ -37,13 +54,16 @@ if (isset($_POST['id'])) {
     $test = $stmt->fetch(PDO::FETCH_ASSOC);
 }elseif(isset($_POST['solution'])){
 
-    echo "<script>alert(" . $_POST['solution'] . ");</script>";
-    /*$stmt = $conn->prepare("select ts.score as 'tot_score', t.task_result as 'task_result' from tests t join task_set ts on ts.id = t.set_id where t.id = :id");
+    $stmt = $conn->prepare("select ts.score as 'tot_score', t.task_result as 'task_result' from tests t join task_set ts on ts.id = t.set_id where t.id = :id");
     $stmt->bindParam(':id', $_POST['test_id']);
     $stmt->execute();
-    $test = $stmt->fetch(PDO::FETCH_ASSOC);
+    $test2 = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $corr_result = $test['task_result'];
+    $corr_result = $test2['task_result'];
+    //$expr1 = addBackslash($corr_result);
+    //$expr2 = addBackslash($_POST['solution']);
+
+
     $data = array(
         "expr1" => $corr_result,
         "expr2" => $_POST['solution']
@@ -52,7 +72,7 @@ if (isset($_POST['id'])) {
     $response = sendPostRequest('https://site93.webte.fei.stuba.sk:9001/porovnaj2', $data);
 
     if ($response==1){
-        $tot_score = $test['tot_score'];
+        $tot_score = $test2['tot_score'];
     }else{
         $tot_score = 0;
     }
@@ -64,7 +84,7 @@ if (isset($_POST['id'])) {
     $stmt->execute();
     $test = $stmt->fetch(PDO::FETCH_ASSOC);
     header("Location: ./");
-    exit();*/
+    exit();
 }else{
     header("Location: ./");
     exit();
@@ -212,6 +232,7 @@ if (isset($_POST['id'])) {
                             </math-field>
                         </p>
                         <input hidden name="solution" id="sol" value="">
+                        <input hidden name="test_id" value="<?php echo $test['id']?>">
 
                         <button type="submit" class="btn btn-primary" style="width: 45%">Odoslať</button>
 

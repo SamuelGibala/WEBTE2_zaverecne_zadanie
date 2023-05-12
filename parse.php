@@ -30,7 +30,7 @@ function getRandomTask($filename){
     $random = rand(0,$countFiles-1);
     echo $random . "<br>";
     $file_name = $filename[$random];
-    $file_name = "./zadania/" . $file_name;
+    $file_name = "./zadania/testy/" . $file_name;
     echo $file_name . "<br>";
     $tasks = parseLatexFile($file_name);
     $tasksCount = count($tasks['tasks']);
