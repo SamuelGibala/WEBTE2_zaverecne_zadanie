@@ -6,6 +6,9 @@ if (!isset($_SESSION['email'])) {
     header("Location: ./");
     exit();
 }
+if ($_SESSION['role'] === "student") {
+    header("Location: homeS.php");
+}
 try {
     $db = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -18,18 +21,9 @@ try {
     echo "Connection failed: " . $e->getMessage();
 }
 
-$folderPath = 'blok';
+$folderPath = 'zadania/testy';
 $files = scandir($folderPath);
 
-
-function getSelectedCheckboxes($taskId, $checkboxValue)
-{
-    global $db;
-    $stmt = $db->prepare("SELECT COUNT(*) FROM task WHERE set_id = ? AND file_name = ?");
-    $stmt->execute([$taskId, $checkboxValue]);
-    $count = $stmt->fetchColumn();
-    return $count > 0;
-}
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $name = $_POST['task_name'];
@@ -48,7 +42,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($start == null && $deadline == null ){
         $stmt->bindParam(2, $start, PDO::PARAM_NULL);
         $stmt->bindParam(3, $deadline, PDO::PARAM_NULL);
-    }else{
+    }elseif ($start == null){
+        $stmt->bindParam(2, $start, PDO::PARAM_NULL);
+        $stmt->bindParam(3, $deadline);
+    }elseif ($deadline == null){
+        $stmt->bindParam(2, $start);
+        $stmt->bindParam(3, $deadline, PDO::PARAM_NULL);
+    } else{
         $stmt->bindParam(2, $start);
         $stmt->bindParam(3, $deadline);
     }
@@ -180,10 +180,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <main style="margin-top: 50px">
     <div class="container pt-4">
         <hgroup>
-            <h2>Vygenerovanie úloh pre žiaka</h2>
+            <h2>Vygenerovanie úloh pre študentov</h2>
         </hgroup>
         <hr />
-        <form action="#" method="post">
+        <form action="#" method="post" onsubmit="return validateForm();">
             <table class="tableS">
                 <thead>
                 <tr><td>Názov úlohy</td><td>Dátum odkedy</td><td>Dátum dokedy</td><td>Body</td></tr>
@@ -194,20 +194,39 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <td><input type='date' name='term_start' class='form-control' id='InputDate' value="0"></td>
                     <td><input type='date' name='deadline' class='form-control' id='InputDate' value="0"></td>
                     <td><input type='number' name='score' class='form-control' id='body' value='body' required></td>
-                    <?php
-                            foreach ($files as $file) {
-                            if (is_dir($folderPath . '/' . $file) || strpos($file, '.') === 0) {
-                            continue;
-                            }
-                                echo '<td><input type="checkbox" name="file[]" value="' . $file . '">' . $file . '</td>';
-                            }
-                    ?>
-                    <td><button type='submit' class="btn btn-primary">Priradiť</button></td>
                 </tr>
                 </tbody>
             </table>
+            <?php
+            foreach ($files as $file) {
+                if (is_dir($folderPath . '/' . $file) || strpos($file, '.') === 0) {
+                    continue;
+                }
+                echo '<input type="checkbox" name="file[]" value="' . $file . '" style="margin-right: 5px">' . $file . '<br>';
+            }
+            ?>
+            <button type='submit' class="btn btn-primary">Priradiť</button>
         </form>
     </div>
 </main>
+<script>
+    function validateForm() {
+
+        var checkboxes = document.getElementsByName('file[]');
+
+        var isChecked = false;
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                isChecked = true;
+                break;
+            }
+        }
+
+        if (!isChecked) {
+            alert("Zaškrtni aspoň jedno políčko!");
+            return false; // Prevent form submission
+        }
+    }
+</script>
 </body>
 </html>
