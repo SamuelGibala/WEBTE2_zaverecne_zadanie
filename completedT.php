@@ -15,7 +15,12 @@ try {
     $db = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $query = "SELECT  id, email, name, surname, numbergeneratetask,numbersubmittask FROM users WHERE role = 'student'";
+    //$query = "SELECT  u.id, u.email, u.name, u.surname, COUNT(t.student_id) as Pocet_uloh FROM users u WHERE role = 'student' join tests t on u.id = t.student_id";
+    $query =  "SELECT u.id AS user_id, u.name, u.surname, u.email, COUNT(t.task) AS number_of_tasks, SUM(t.score) AS total_score
+                    FROM users u
+                        JOIN tests t ON u.id = t.student_id
+                            WHERE u.role = 'student'
+                                GROUP BY u.id, u.name, u.surname, u.email";
     $stm = $db->query($query);
     $rows = $stm->fetchAll(PDO::FETCH_ASSOC);
 
@@ -29,6 +34,10 @@ try {
 <!doctype html>
 <html lang="sk">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Home Page</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.css" rel="stylesheet"/>
@@ -40,11 +49,12 @@ try {
     <link href="https://cdn.datatables.net/1.13.3/css/dataTables.bootstrap5.min.css">
     <link href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.bootstrap5.min.css">
     <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.js"></script>
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/table.css">
 </head>
 <body>
 <header>
@@ -131,15 +141,16 @@ try {
                     <th>ID</th>
                     <th>Meno</th>
                     <th>Priezvisko</th>
+                    <th>Email</th>
                     <th>Počet vygenerovaných úloh</th>
-                    <th>Počet odovzdaných úloh</th>
+                    <th>Počet bodov</th>
                 </tr>
             </thead>
            <tbody>
                <?php
                    foreach ($rows as $row)
                    {
-                   echo("<tr><td>{$row['id']}</td> <td>{$row['name']}</td> <td>{$row['surname']}</td><td>{$row['email']}</td><td>{$row['email']}</td> </tr> ");
+                   echo("<tr><td>{$row['user_id']}</td> <td>{$row['name']}</td> <td>{$row['surname']}</td><td>{$row['email']}</td><td>{$row['number_of_tasks']}</td><td>{$row['total_score']}</td></tr> ");
                    }
                ?>
            </tbody>
@@ -154,11 +165,8 @@ try {
     ?>
     $(document).ready( function () {
         table = $('#example').DataTable({
-            order: [[3, 'asc']],
-            "lengthChange": true,
-            "pageLength": 10,
+            order: [[2, 'asc']],
             "pagingType": "full_numbers",
-            "searching": true,
             "bInfo" : false
         });
     });
