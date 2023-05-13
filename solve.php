@@ -9,6 +9,9 @@ if (!isset($_SESSION['email'])) {
     header("Location: ./");
     exit();
 }
+if ($_SESSION['role'] === "teacher") {
+    header("Location: homeT.php");
+}
 
 $conn = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

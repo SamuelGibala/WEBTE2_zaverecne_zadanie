@@ -20,51 +20,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         }
 
-        if (strlen($password) < 6) {
-            echo '<script>alert("Password must be at least 6 characters long"); window.location.href = "./";</script>';
-            exit();
-        }
 
-        $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email AND password = :password");
+        $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email");
         $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $password);
         $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Check if the query returns any rows
-        if ($stmt->rowCount() > 0) {
-            // Login successful
-            $_SESSION['email'] = $email;
+        if ($row) {
+            $storedHashedPassword = $row['password'];
+            if (password_verify($password, $storedHashedPassword)) {
+                // Passwords match
+                $_SESSION['email'] = $email;
+                $role = $row['role'];
+                $id = $row['id'];
+                $_SESSION['role'] = $role;
+                $_SESSION['id'] = $id;
 
-            $stmt = $conn->prepare("SELECT id,role FROM users WHERE email = :email");
-            $stmt->bindParam(':email', $email);
-            $stmt->execute();
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            $role = $row['role'];
-            $id = $row['id'];
-            $_SESSION['role'] = $role;
-            $_SESSION['id'] = $id;
-
-            if ($_SESSION['role'] === "teacher") {
-                header("Location: homeT.php");
-            } elseif ($_SESSION['role'] === "student") {
-                header("Location: homeS.php");
+                if ($role === "teacher") {
+                    header("Location: homeT.php");
+                } elseif ($role === "student") {
+                    header("Location: homeS.php");
+                } else {
+                    // Invalid role
+                    echo '<script>alert("Invalid user role"); window.location.href = "./";</script>';
+                    exit();
+                }
             } else {
-                // Invalid role
-                echo '<script>alert("Invalid user role"); window.location.href = "./";</script>';
+                // Login failed
+                echo '<script>alert("Invalid email or password"); window.location.href = "./";</script>';
                 exit();
             }
         } else {
-            // Login failed
-            echo '<script>alert("Invalid email or password"); window.location.href = "./";</script>';
+            // User not found
+            echo '<script>alert("User not found"); window.location.href = "./";</script>';
             exit();
         }
     } catch (PDOException $e) {
         echo "Connection failed: " . $e->getMessage();
         exit();
     }
-} else {
-    // Redirect to login page
-    header("Location: index.php");
-    exit();
 }
 ?>

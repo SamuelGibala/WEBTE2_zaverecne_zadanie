@@ -1,13 +1,67 @@
 <?php
 session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 require_once('config.php');
-// Check if user is not logged in
 if (!isset($_SESSION['email'])) {
     header("Location: ./");
     exit();
 }
 if ($_SESSION['role'] === "student") {
     header("Location: homeS.php");
+}
+try {
+    $db = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $stmt = $db->prepare("SELECT id, task_name, term_start, deadline FROM task_set");
+    $stmt->execute();
+    $datas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
+
+// Check if form is submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Retrieve form data
+    $name = $_POST['name'];
+    $surname = $_POST['surname'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $role = $_POST['role'];
+
+    if (empty($name)) {
+        echo '<script>alert("Name is required."); window.location.href = "./";</script>';
+        exit();
+    }
+
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo '<script>alert("Invalid email format."); window.location.href = "./";</script>';
+        exit();
+    }
+
+
+    if (strlen($password) < 6) {
+        echo '<script>alert("Password must be at least 6 characters long."); window.location.href = "./";</script>';
+        exit();
+    }
+
+    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+    $sql = "INSERT INTO users (name, surname, email, password, role) VALUES (?, ?, ?, ?,?)";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $name);
+    $stmt->bindParam(2, $surname);
+    $stmt->bindParam(3, $email);
+    $stmt->bindParam(4, $hashedPassword);
+    $stmt->bindParam(5, $role);
+    $stmt->execute();
+
+    // Display success message
+    echo "User registration successful!";
 }
 ?>
 <!doctype html>
@@ -34,6 +88,36 @@ if ($_SESSION['role'] === "student") {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/table.css">
+    <style>
+        .container {
+            margin: auto;
+            max-width: 400px;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+
+    </style>
 </head>
 <body>
 <header>
@@ -128,8 +212,65 @@ if ($_SESSION['role'] === "student") {
             <h2>Pridať používateľa</h2>
         </hgroup>
         <hr />
+        <form method="POST" action="#" onsubmit="return validateForm()">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="Meno" ><br><br>
+            <span id="nameError" class="error"></span><br><br>
 
+            <label for="surname">Surname:</label>
+            <input type="text" id="surname" name="surname" value="Priezvisko" ><br><br>
+            <span id="surnameError" class="error"></span><br><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="Email" ><br><br>
+            <span id="emailError" class="error"></span><br><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" ><br><br>
+            <span id="passwordError" class="error"></span><br><br>
+
+            <label for="role">Rola student/teacher:</label>
+            <input type="text" id="role" name="role" value="Typ" ><br><br>
+
+            <input type="submit" class="btn btn-primary" value="Register">
+        </form>
     </div>
 </main>
+<script>
+    function validateForm() {
+        // Clear previous error messages
+        document.getElementById('nameError').textContent = '';
+        document.getElementById('surnameError').textContent = '';
+        document.getElementById('emailError').textContent = '';
+        document.getElementById('passwordError').textContent = '';
+
+        // Get form values
+        var name = document.getElementById('name').value;
+        var surname = document.getElementById('surname').value;
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+
+
+        if (name === '') {
+            document.getElementById('nameError').textContent = 'Name is required.';
+            return false;
+        }
+        if (surname === '') {
+            document.getElementById('surnameError').textContent = 'Surname is required.';
+            return false;
+        }
+
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            document.getElementById('emailError').textContent = 'Invalid email format.';
+            return false;
+        }
+        if (password.length < 6) {
+            document.getElementById('passwordError').textContent = 'Password must be at least 6 characters long.';
+            return false;
+        }
+        return true;
+    }
+</script>
 </body>
 </html>

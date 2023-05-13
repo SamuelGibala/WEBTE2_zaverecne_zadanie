@@ -21,7 +21,7 @@ try {
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     //$query = "SELECT  u.id, u.email, u.name, u.surname, COUNT(t.student_id) as Pocet_uloh FROM users u WHERE role = 'student' join tests t on u.id = t.student_id";
-    $query =  "SELECT u.id AS user_id, u.name, u.surname, u.email, COUNT(t.task) AS number_of_tasks, SUM(t.score) AS total_score
+    $query =  "SELECT u.id AS user_id, u.name, u.surname, u.email, COUNT(t.task) AS number_of_tasks, SUM(t.score) AS total_score, COUNT(t.student_result) AS number_submit
                     FROM users u
                         JOIN tests t ON u.id = t.student_id
                             WHERE u.role = 'student'
@@ -156,6 +156,7 @@ try {
                     <th>Priezvisko</th>
                     <th>Email</th>
                     <th>Počet vygenerovaných úloh</th>
+                    <th>Počet odovzdaných úloh</th>
                     <th>Počet bodov</th>
                 </tr>
             </thead>
@@ -163,7 +164,7 @@ try {
                <?php
                    foreach ($rows as $row)
                    {
-                   echo("<tr><td>{$row['user_id']}</td> <td>{$row['name']}</td> <td>{$row['surname']}</td><td>{$row['email']}</td><td>{$row['number_of_tasks']}</td><td>{$row['total_score']}</td></tr> ");
+                   echo("<tr><td>{$row['user_id']}</td> <td>{$row['name']}</td> <td>{$row['surname']}</td><td>{$row['email']}</td><td>{$row['number_of_tasks']}</td><td>{$row['number_submit']}</td><td>{$row['total_score']}</td></tr> ");
                    }
                ?>
            </tbody>

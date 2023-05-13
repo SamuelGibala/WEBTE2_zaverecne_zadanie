@@ -12,6 +12,10 @@ if (!isset($_SESSION['email'])) {
     exit();
 }
 
+if ($_SESSION['role'] === "student") {
+    header("Location: homeS.php");
+}
+
 try {
     $db = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
