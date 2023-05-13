@@ -90,55 +90,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/table.css">
     <style>
-        @media (max-width: 800px) {
-            .tableS tbody,
-            .tableS thead,
-            .tableS th,
-            .tableS td,
-            .tableS tr {
-                display: block;
-            }
+        .container {
+            margin: auto;
+            max-width: 400px;
+            padding: 20px;
+            border-radius: 5px;
+        }
 
-            .tableS thead tr {
-                position: absolute;
-                top: -9999px;
-                left: -9999px;
-            }
+        h2 {
+            margin-bottom: 20px;
+        }
 
-            .tableS tr {
-                margin-bottom: 15px;
-            }
+        form label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
 
-            .tableS td {
-                border: none;
-                position: relative;
-                padding-left: 50%;
-            }
-
-            .tableS td:before {
-                position: absolute;
-                top: 6px;
-                left: 6px;
-                width: 45%;
-                padding-right: 10px;
-                white-space: nowrap;
-            }
-
-            .tableS td:nth-of-type(1):before {
-                content: "Názov úlohy";
-            }
-
-            .tableS td:nth-of-type(2):before {
-                content: "Dátum odkedy";
-            }
-
-            .tableS td:nth-of-type(3):before {
-                content: "Dátum dokedy";
-            }
-
-            .tableS td:nth-of-type(4):before {
-                content: "Body";
-            }
+        input[type="text"],
+        input[type="number"],
+        input[type="datetime-local"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
     </style>
 </head>
@@ -236,21 +212,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </hgroup>
         <hr />
         <form action="#" method="post" onsubmit="return validateForm();">
-            <div class="table-responsive">
-                <table class="tableS">
-                    <thead>
-                    <tr><td>Názov úlohy</td><td>Dátum odkedy</td><td>Dátum dokedy</td><td>Body</td></tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><input type='text' name='task_name' class='form-control' id='name' value="Názov" required></td>
-                        <td><input type='datetime-local' name='term_start' class='form-control' id='InputDate' value="0"></td>
-                        <td><input type='datetime-local' name='deadline' class='form-control' id='InputDate' value="0"></td>
-                        <td><input type='number' name='score' class='form-control' id='body' value='body' required></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="task_name">Názov úlohy</label>
+                    <input type="text" name="task_name"  id="name" required>
+                </div>
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="term_start">Dátum odkedy</label>
+                    <input type="datetime-local" name="term_start"  id="InputDate" >
+                </div>
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="deadline">Dátum dokedy</label>
+                    <input type="datetime-local" name="deadline"  id="InputDate" >
+                </div>
+                <div class="form-outline mb-4">
+                    <label class="form-label"  for="score">Body</label>
+                    <input type="number" name="score"  id="body" required>
+                </div>
             <?php
             foreach ($files as $file) {
                 if (is_dir($folderPath . '/' . $file) || strpos($file, '.') === 0) {
