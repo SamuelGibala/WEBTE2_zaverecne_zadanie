@@ -96,6 +96,58 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/table.css">
+    <style>
+        @media (max-width: 800px) {
+            .tableS tbody,
+            .tableS thead,
+            .tableS th,
+            .tableS td,
+            .tableS tr {
+                display: block;
+            }
+
+            .tableS thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+
+            .tableS tr {
+                margin-bottom: 15px;
+            }
+
+            .tableS td {
+                border: none;
+                position: relative;
+                padding-left: 50%;
+            }
+
+            .tableS td:before {
+                position: absolute;
+                top: 6px;
+                left: 6px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+            }
+
+            .tableS td:nth-of-type(1):before {
+                content: "Názov úlohy";
+            }
+
+            .tableS td:nth-of-type(2):before {
+                content: "Dátum odkedy";
+            }
+
+            .tableS td:nth-of-type(3):before {
+                content: "Dátum dokedy";
+            }
+
+            .tableS td:nth-of-type(4):before {
+                content: "Body";
+            }
+        }
+    </style>
 </head>
 <body>
 <header>
@@ -191,19 +243,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </hgroup>
         <hr />
         <form action="#" method="post" onsubmit="return validateForm();">
-            <table class="tableS">
-                <thead>
-                <tr><td>Názov úlohy</td><td>Dátum odkedy</td><td>Dátum dokedy</td><td>Body</td></tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td><input type='text' name='task_name' class='form-control' id='name' value="Názov" required></td>
-                    <td><input type='datetime-local' name='term_start' class='form-control' id='InputDate' value="0"></td>
-                    <td><input type='datetime-local' name='deadline' class='form-control' id='InputDate' value="0"></td>
-                    <td><input type='number' name='score' class='form-control' id='body' value='body' required></td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="tableS">
+                    <thead>
+                    <tr><td>Názov úlohy</td><td>Dátum odkedy</td><td>Dátum dokedy</td><td>Body</td></tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><input type='text' name='task_name' class='form-control' id='name' value="Názov" required></td>
+                        <td><input type='datetime-local' name='term_start' class='form-control' id='InputDate' value="0"></td>
+                        <td><input type='datetime-local' name='deadline' class='form-control' id='InputDate' value="0"></td>
+                        <td><input type='number' name='score' class='form-control' id='body' value='body' required></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
             <?php
             foreach ($files as $file) {
                 if (is_dir($folderPath . '/' . $file) || strpos($file, '.') === 0) {

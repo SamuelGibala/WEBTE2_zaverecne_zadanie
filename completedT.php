@@ -153,27 +153,29 @@ try {
     <div class="container pt-4">
         <h2>Zoznam študentov</h2>
         <hr />
-       <table id="example" class="dataTable display" style="width:100%">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Meno</th>
-                    <th>Priezvisko</th>
-                    <th>Email</th>
-                    <th>Počet vygenerovaných úloh</th>
-                    <th>Počet odovzdaných úloh</th>
-                    <th>Počet bodov</th>
-                </tr>
-            </thead>
-           <tbody>
-               <?php
-                   foreach ($rows as $row)
-                   {
-                   echo("<tr><td>{$row['user_id']}</td> <td>{$row['name']}</td> <td>{$row['surname']}</td><td>{$row['email']}</td><td>{$row['number_of_tasks']}</td><td>{$row['number_submit']}</td><td>{$row['total_score']}</td></tr> ");
-                   }
-               ?>
-           </tbody>
-        </table>
+        <div class="table-responsive">
+           <table id="example" class="dataTable display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Meno</th>
+                        <th>Priezvisko</th>
+                        <th>Email</th>
+                        <th>Počet vygenerovaných úloh</th>
+                        <th>Počet odovzdaných úloh</th>
+                        <th>Počet bodov</th>
+                    </tr>
+                </thead>
+               <tbody>
+                   <?php
+                       foreach ($rows as $row)
+                       {
+                       echo("<tr><td>{$row['user_id']}</td> <td>{$row['name']}</td> <td>{$row['surname']}</td><td>{$row['email']}</td><td>{$row['number_of_tasks']}</td><td>{$row['number_submit']}</td><td>{$row['total_score']}</td></tr> ");
+                       }
+                   ?>
+               </tbody>
+            </table>
+        </div>
     </div>
 </main>
 
