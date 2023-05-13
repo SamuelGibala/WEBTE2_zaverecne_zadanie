@@ -32,7 +32,7 @@ try {
     $stmt = $db->query($query);
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $stmt = $db->prepare("select tests.id as 'id', ts.task_name as 'task_name', tests.score as 'score' from tests join task_set ts on ts.id = tests.set_id where student_id= :id and student_result is not null");
+    $stmt = $db->prepare("select tests.id as 'id', ts.task_name as 'task_name', tests.score as 'score',ts.score as 'tot_score' from tests join task_set ts on ts.id = tests.set_id where student_id= :id and student_result is not null order by tests.timestamp desc");
     $stmt->bindParam(':id', $detail_id);
     $stmt->execute();
     $tests = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -183,7 +183,7 @@ try {
                     </li>';
             } else {
                 foreach ($tests as $item) {
-                    if ($item['score']==1){$labelScore = $item['score'] . " bod";}elseif ($item['score']>1 && $item['score']<5){$labelScore = $item['score'] . " body";}else{$labelScore = $item['score'] . " bodov";}
+                    if ($item['tot_score']==1){$labelScore = $item['score'] . "/" . $item['tot_score'] . "bodu";}else{$labelScore = $item['score'] . "/" . $item['tot_score'] . " bodov";}
                     echo '<li class="list-group-item d-flex justify-content-between align-items-center">                 
                             <span class="text-left">' . $item['task_name'] . '</span>
                             <span class="text-center">' . $labelScore . '</span>

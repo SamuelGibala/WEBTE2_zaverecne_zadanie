@@ -16,7 +16,7 @@ if ($_SESSION['role'] === "teacher") {
 $conn = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$stmt = $conn->prepare("select tests.id as 'id', ts.task_name as 'task_name' from tests join task_set ts on ts.id = tests.set_id where student_id= :id and student_result is not null");
+$stmt = $conn->prepare("select tests.id as 'id', ts.task_name as 'task_name', tests.score as 'score',ts.score as 'tot_score' from tests join task_set ts on ts.id = tests.set_id where student_id= :id and student_result is not null order by tests.timestamp desc");
 $stmt->bindParam(':id', $_SESSION['id']);
 $stmt->execute();
 $tests = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -138,10 +138,10 @@ $tests = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </li>';
                 } else {
                     foreach ($tests as $item) {
+                        if ($item['tot_score']==1){$labelScore = $item['score'] . "/" . $item['tot_score'] . "bodu";}else{$labelScore = $item['score'] . "/" . $item['tot_score'] . " bodov";}
                         echo '<li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <h5>' . $item['task_name'] . '</h5>
-                        </div>
+                        <span class="text-left">' . $item['task_name'] . '</span>
+                        <span class="text-center">' . $labelScore . '</span>
                         <div>
                             <form action="./check.php" method="post">
                                 <input type="hidden" name="id" value="' . $item['id'] . '">

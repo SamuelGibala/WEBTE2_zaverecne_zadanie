@@ -22,7 +22,7 @@ $stmt->bindParam(':id', $_SESSION['id']);
 $stmt->execute();
 $sets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$stmt = $conn->prepare("select tests.id as 'id',ts.task_name as 'task_name' from tests join task_set ts on ts.id = tests.set_id where tests.student_id= :id and ((term_start <= now() or term_start is null) and (deadline >= now() or deadline is null)) and tests.student_result is null");
+$stmt = $conn->prepare("select tests.id as 'id',ts.task_name as 'task_name', ts.score as 'score' from tests join task_set ts on ts.id = tests.set_id where tests.student_id= :id and ((term_start <= now() or term_start is null) and (deadline >= now() or deadline is null)) and tests.student_result is null");
 $stmt->bindParam(':id', $_SESSION['id']);
 $stmt->execute();
 $incompleted = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -136,10 +136,10 @@ $incompleted = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </li>';
                 }else {
                     foreach ($sets as $set) {
+                        if ($set['score']==1){$labelScore = $set['score'] . " bod";}elseif ($set['score']>1 && $set['score']<5){$labelScore = $set['score'] . " body";}else{$labelScore = $set['score'] . " bodov";}
                         echo '<li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <h5>' . $set['task_name'] . '</h5>
-                        </div>
+                        <span class="text-left">' . $set['task_name'] . '</span>
+                        <span class="text-center">' . $labelScore . '</span>
                         <div>
                             <form action="./generate.php" method="post"><input type="hidden" name="set_id" value="' . $set['id'] . '"><button type="submit" class="btn btn-primary">Generovať</button></form>
                         </div></li>';
@@ -162,10 +162,10 @@ $incompleted = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </li>';
                 }else {
                     foreach ($incompleted as $item) {
+                        if ($item['score']==1){$labelScore = $item['score'] . " bod";}elseif ($item['score']>1 && $item['score']<5){$labelScore = $item['score'] . " body";}else{$labelScore = $item['score'] . " bodov";}
                         echo '<li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <h5>' . $item['task_name'] . '</h5>
-                        </div>
+                        <span class="text-left">' . $item['task_name'] . '</span>
+                        <span class="text-center">' . $labelScore . '</span>
                         <div>
                             <form action="./solve.php" method="post"><input type="hidden" name="id" value="' . $item['id'] . '"><button type="submit" class="btn btn-primary">Vypracovať</button></form>
                         </div></li>';
