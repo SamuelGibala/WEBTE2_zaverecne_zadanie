@@ -85,6 +85,13 @@ try {
                     <i class="fa-solid fa-list"></i>
                     <span>Zoznam študentov</span>
                 </a>
+                <a
+                        href="./addPerson.php"
+                        class="list-group-item list-group-item-action py-2 ripple"
+                >
+                    <i class="fa-solid fa-user-plus"></i>
+                    <span>Pridať osobu</span>
+                </a>
             </div>
         </div>
     </nav>
