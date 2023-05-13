@@ -115,6 +115,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
 
 
     </style>
@@ -214,23 +219,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <hr />
         <form method="POST" action="#" onsubmit="return validateForm()">
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name" value="Meno" ><br><br>
-            <span id="nameError" class="error"></span><br><br>
+            <input type="text" id="name" name="name" value="Meno" >
+            <span id="nameError" class="error"></span>
 
             <label for="surname">Surname:</label>
-            <input type="text" id="surname" name="surname" value="Priezvisko" ><br><br>
-            <span id="surnameError" class="error"></span><br><br>
+            <input type="text" id="surname" name="surname" value="Priezvisko" >
+            <span id="surnameError" class="error"></span>
 
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" value="Email" ><br><br>
-            <span id="emailError" class="error"></span><br><br>
+            <input type="email" id="email" name="email" value="Email" >
+            <span id="emailError" class="error"></span>
 
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" ><br><br>
-            <span id="passwordError" class="error"></span><br><br>
+            <input type="password" id="password" name="password" >
+            <span id="passwordError" class="error"></span>
 
             <label for="role">Rola student/teacher:</label>
-            <input type="text" id="role" name="role" value="Typ" ><br><br>
+            <input type="text" id="role" name="role" value="Typ" >
 
             <input type="submit" class="btn btn-primary" value="Register">
         </form>
