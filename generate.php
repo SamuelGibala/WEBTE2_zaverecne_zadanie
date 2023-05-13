@@ -27,7 +27,6 @@ if (isset($_POST['set_id'])) {
         $arr[] = $checkboxValue;
     }
     $task = getRandomTask($arr);
-    sleep(10);
     $stmt = $conn->prepare("insert into tests (student_id, task, task_image, task_result, set_id) values (?, ?, ?, ?, ?)");
     $stmt->execute([$_SESSION['id'],$task['task'],$task['image'],$task['equation'], $_POST['set']]);
     header("Location: ./");

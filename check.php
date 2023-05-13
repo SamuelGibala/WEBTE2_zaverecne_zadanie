@@ -144,8 +144,9 @@ if (isset($_POST['id'])) {
                         <p>
                             <strong><?php echo $test['task']?></strong>
                         </p>
-                        <img src=<?php echo $test['task_image']?> style="width:60%">
-
+                        <?php if($test['task_image'] != null){
+                            echo '<img src="./zadania/images/' . $test['task_image'] . '" style="width:60%">';
+                        } ?>
                         <p>
                             <strong>Správne riešenie:</strong>
                         </p>
