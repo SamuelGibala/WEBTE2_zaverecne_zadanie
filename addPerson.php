@@ -120,8 +120,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-size: 14px;
             margin-top: 5px;
         }
+        .custom-radio {
+            display: inline-block;
+            position: relative;
+            padding-left: 25px;
+            margin-right: 15px;
+            cursor: pointer;
+            font-size: 16px;
+        }
 
+        .custom-radio input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
 
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: #ccc;
+            border-radius: 50%;
+        }
+
+        .custom-radio input:checked ~ .checkmark {
+            background-color: #2196F3;
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .custom-radio input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        .custom-radio .checkmark:after {
+            top: 6px;
+            left: 6px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: white;
+        }
     </style>
 </head>
 <body>
@@ -218,24 +263,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </hgroup>
         <hr />
         <form method="POST" action="#" onsubmit="return validateForm()">
-            <label for="name">Name:</label>
+            <label for="name">Meno:</label>
             <input type="text" id="name" name="name" value="Meno" >
             <span id="nameError" class="error"></span>
 
-            <label for="surname">Surname:</label>
+            <label for="surname">Priezvisko:</label>
             <input type="text" id="surname" name="surname" value="Priezvisko" >
             <span id="surnameError" class="error"></span>
 
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" value="Email" >
+            <input type="email" id="email" name="email" value="example@example.com" >
             <span id="emailError" class="error"></span>
 
-            <label for="password">Password:</label>
+            <label for="password">Heslo:</label>
             <input type="password" id="password" name="password" >
             <span id="passwordError" class="error"></span>
 
-            <label for="role">Rola student/teacher:</label>
-            <input type="text" id="role" name="role" value="Typ" >
+            <label class="custom-radio" for="roleStudent">Student
+                <input type="radio" id="roleStudent" name="role" value="student" checked>
+                <span class="checkmark"></span>
+            </label>
+
+            <label class="custom-radio" for="roleTeacher">Teacher
+                <input type="radio" id="roleTeacher" name="role" value="teacher">
+                <span class="checkmark"></span>
+            </label>
+
+            <br><br>
+            <span id="roleError" class="error"></span>
 
             <input type="submit" class="btn btn-primary" value="Register">
         </form>
@@ -243,35 +298,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </main>
 <script>
     function validateForm() {
-        // Clear previous error messages
+
         document.getElementById('nameError').textContent = '';
         document.getElementById('surnameError').textContent = '';
         document.getElementById('emailError').textContent = '';
         document.getElementById('passwordError').textContent = '';
+        document.getElementById('roleError').textContent = '';
 
-        // Get form values
         var name = document.getElementById('name').value;
         var surname = document.getElementById('surname').value;
         var email = document.getElementById('email').value;
         var password = document.getElementById('password').value;
-
+        var roleError =  document.getElementById('roleError').value;
+        var role =  document.getElementById('role').value;
 
         if (name === '') {
-            document.getElementById('nameError').textContent = 'Name is required.';
+            document.getElementById('nameError').textContent = 'Meno je povinné';
             return false;
         }
         if (surname === '') {
-            document.getElementById('surnameError').textContent = 'Surname is required.';
+            document.getElementById('surnameError').textContent = 'Priezvisko je povinné';
             return false;
         }
 
         var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-            document.getElementById('emailError').textContent = 'Invalid email format.';
+            document.getElementById('emailError').textContent = 'Nesprávny tvar emailu';
             return false;
         }
         if (password.length < 6) {
-            document.getElementById('passwordError').textContent = 'Password must be at least 6 characters long.';
+            document.getElementById('passwordError').textContent = 'Heslo musí mať najmenej 6 znakov';
+            return false;
+        }
+        if (!role.checked){
+            roleError.textContent = "Vyberte rolu";
             return false;
         }
         return true;

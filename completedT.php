@@ -21,11 +21,16 @@ try {
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     //$query = "SELECT  u.id, u.email, u.name, u.surname, COUNT(t.student_id) as Pocet_uloh FROM users u WHERE role = 'student' join tests t on u.id = t.student_id";
-    $query =  "SELECT u.id AS user_id, u.name, u.surname, u.email, COUNT(t.task) AS number_of_tasks, SUM(t.score) AS total_score, COUNT(t.student_result) AS number_submit
+   /* $query =  "SELECT u.id AS user_id, u.name, u.surname, u.email, COUNT(t.task) AS number_of_tasks, SUM(t.score) AS total_score, COUNT(t.student_result) AS number_submit
                     FROM users u
                         JOIN tests t ON u.id = t.student_id
                             WHERE u.role = 'student'
-                                GROUP BY u.id, u.name, u.surname, u.email";
+                                GROUP BY u.id, u.name, u.surname, u.email";*/
+    $query = "SELECT u.id AS user_id, u.name, u.surname, u.email, COUNT(t.task) AS number_of_tasks, SUM(t.score) AS total_score, COUNT(t.student_result) AS number_submit
+                FROM users u
+                    LEFT JOIN tests t ON u.id = t.student_id
+                        WHERE u.role = 'student'
+                            GROUP BY u.id, u.name, u.surname, u.email";
     $stm = $db->query($query);
     $rows = $stm->fetchAll(PDO::FETCH_ASSOC);
 

@@ -198,8 +198,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <tbody>
                 <tr>
                     <td><input type='text' name='task_name' class='form-control' id='name' value="Názov" required></td>
-                    <td><input type='date' name='term_start' class='form-control' id='InputDate' value="0"></td>
-                    <td><input type='date' name='deadline' class='form-control' id='InputDate' value="0"></td>
+                    <td><input type='datetime-local' name='term_start' class='form-control' id='InputDate' value="0"></td>
+                    <td><input type='datetime-local' name='deadline' class='form-control' id='InputDate' value="0"></td>
                     <td><input type='number' name='score' class='form-control' id='body' value='body' required></td>
                 </tr>
                 </tbody>
