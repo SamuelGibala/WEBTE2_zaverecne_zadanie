@@ -1,10 +1,8 @@
 <?php
-
+session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-session_start();
-$detail_id = $_GET["id"];
 require_once('config.php');
 // Check if user is not logged in
 if (!isset($_SESSION['email'])) {
@@ -12,33 +10,18 @@ if (!isset($_SESSION['email'])) {
     exit();
 }
 
-try {
-    $db = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$conn = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $query = "SELECT  email, name, surname, id as u_id FROM users WHERE role = 'student'";
-    $stm = $db->query($query);
-    $rows = $stm->fetchAll(PDO::FETCH_ASSOC);
-
-    $query = "SELECT * FROM users u WHERE u.id =" . $detail_id;
-    $stmt = $db->query($query);
-    $person = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    $query = "SELECT task, task_result, student_result, score FROM tests t  WHERE t.student_id =" . $detail_id;
-    $stmt = $db->query($query);
-    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    $stmt = $db->prepare("select tests.id as 'id', ts.task_name as 'task_name', tests.score as 'score' from tests join task_set ts on ts.id = tests.set_id where student_id= :id and student_result is not null");
-    $stmt->bindParam(':id', $detail_id);
+if (isset($_POST['id'])) {
+    $stmt = $conn->prepare("select * from tests where id = :id");
+    $stmt->bindParam(':id', $_POST['id']);
     $stmt->execute();
-    $tests = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
-
-} catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
+    $test = $stmt->fetch(PDO::FETCH_ASSOC);
+}else{
+    header("Location: ./");
+    exit();
 }
-
 ?>
 
 <!doctype html>
@@ -91,8 +74,8 @@ try {
                     <span>Zoznam študentov</span>
                 </a>
                 <a
-                        href="./addPerson.php"
-                        class="list-group-item list-group-item-action py-2 ripple"
+                    href="./addPerson.php"
+                    class="list-group-item list-group-item-action py-2 ripple"
                 >
                     <i class="fa-solid fa-user-plus"></i>
                     <span>Pridať osobu</span>
@@ -147,54 +130,57 @@ try {
     </nav>
     <!-- Navbar -->
 </header>
-<!--Main Navigation-->
+
 <!--Main layout-->
 <main style="margin-top: 50px">
     <div class="container pt-4">
-        <h2>Detail Študenta</h2>
-        <hr />
-        <div class="pageElement">
-            <div class="formLogin2 table-responsive" id="specs">
-                <table class="table table-borderless myTable">
-                    <?php
-                        foreach ($person as $persona){
-                            echo ("<tr><th>Meno: </th><td>{$persona['name']}</td></tr>");
-                            echo ("<tr><th>Priezvisko: </th><td>{$persona['surname']}</td></tr>");
-                            echo ("<tr><th>Email: </th><td>{$persona['email']}</td></tr>");
-                            echo ("<tr><th>Typ: </th><td>{$persona['role']}</td></tr>");
-                        }
-                    ?>
-                </table>
+        <div class="mx-0 mx-sm-auto">
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="text-center">
+                        <p>
+                            <strong><?php echo $test['task']?></strong>
+                        </p>
+                        <?php if($test['task_image'] != null){
+                            echo '<img src="./zadania/images/' . $test['task_image'] . '" style="width:60%">';
+                        } ?>
+                        <p>
+                            <strong>Správne riešenie:</strong>
+                        </p>
+                        <p>
+                            <strong>$<?php echo $test['task_result']?>$</strong>
+                        </p>
+                        <p>
+                            <strong>Zadané riešenie:</strong>
+                        </p>
+                        <p>
+                            <strong>$<?php echo $test['student_result']?>$</strong>
+                        </p>
+                        <p>
+                            <strong>Získané body: <?php echo $test['score']?></strong>
+                        </p>
+                    </div>
+
+                </div>
+
             </div>
         </div>
-        <h2>Zoznam úloh študenta</h2>
-        <hr />
-        <ul class="list-group">
-            <?php
-            if (count($tests) == 0){
-                echo '<li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                        <h5>Žiadne vypracované testy</h5>
-                    </div>
-                    </li>';
-            } else {
-                foreach ($tests as $item) {
-                    if ($item['score']==1){$labelScore = $item['score'] . " bod";}elseif ($item['score']>1 && $item['score']<5){$labelScore = $item['score'] . " body";}else{$labelScore = $item['score'] . " bodov";}
-                    echo '<li class="list-group-item d-flex justify-content-between align-items-center">                 
-                            <span class="text-left">' . $item['task_name'] . '</span>
-                            <span class="text-center">' . $labelScore . '</span>
-                            <div>
-                            <form action="./checkT.php" method="post">
-                                <input type="hidden" name="id" value="' . $item['id'] . '">
-                                <button type="submit" class="btn btn-primary">Nahliadnuť</button>
-                            </form>
-                            </div>
-                        </li>';
-                }
-            }
-            ?>
-        </ul>
     </div>
 </main>
+<script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+    };
+</script>
+<script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.js"
+></script>
 </body>
 </html>

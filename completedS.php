@@ -155,48 +155,6 @@ $tests = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 </main>
-<script>
-    <?php echo "var itemCount = " . count($tests) . ";"; ?>
-    var accordionContainer = document.getElementById('accordionExample');
-    accordionContainer.innerHTML = '';
-
-    for (var i = 1; i <= itemCount; i++) {
-        var item = document.createElement('div');
-        item.className = 'accordion-item';
-
-        var header = document.createElement('h2');
-        header.className = 'accordion-header';
-        header.id = 'heading' + i;
-
-        var button = document.createElement('button');
-        button.className = 'accordion-button collapsed';
-        button.setAttribute('data-bs-toggle', 'collapse');
-        button.setAttribute('data-bs-target', '#collapse' + i);
-        button.setAttribute('aria-expanded', 'false');
-        button.setAttribute('aria-controls', 'collapse' + i);
-        button.innerText = 'Item ' + i; //TODO: Nahradiť úloha+body
-
-        header.appendChild(button);
-
-        var content = document.createElement('div');
-        content.id = 'collapse' + i;
-        content.className = 'accordion-collapse collapse';
-        content.setAttribute('aria-labelledby', 'heading' + i);
-        content.setAttribute('data-bs-parent', '#accordionExample');
-
-        var body = document.createElement('div');
-        body.className = 'accordion-body';
-        body.innerText = 'Content for Item ' + i; //TODO: Zobraziť task + result + student result
-
-        content.appendChild(body);
-
-        item.appendChild(header);
-        item.appendChild(content);
-
-        accordionContainer.appendChild(item);
-    }
-
-</script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.js"></script>
 </body>
 </html>
