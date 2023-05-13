@@ -233,7 +233,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 echo '<input type="checkbox" name="file[]" value="' . $file . '" style="margin-right: 5px">' . $file . '<br>';
             }
             ?>
-            <button type='submit' class="btn btn-primary" style="width: 100%">Vypracovať</button>
+            <button type='submit' class="btn btn-primary" style="width: 100%">Vytvoriť</button>
         </form>
     </div>
 </main>
