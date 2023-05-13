@@ -6,6 +6,11 @@ if (!isset($_SESSION['email'])) {
     header("Location: ./");
     exit();
 }
+if ($_SESSION['role'] === "student") {
+    header("Location: homeS.php");
+}
+
+
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -173,7 +178,7 @@ try {
     });
     $('#example tbody').on('click', 'tr', function() {
         var data = table.row(this).data();
-        var id = data[0]; // Assuming the ID is in the first column
+        var id = data[0];
         console.log(id);
         window.location.href = "detail.php?id=" + id;
     });

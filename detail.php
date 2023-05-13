@@ -16,7 +16,7 @@ try {
     $db = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $query = "SELECT  email, name, surname, numbergeneratetask,numbersubmittask, id as u_id FROM users WHERE role = 'student'";
+    $query = "SELECT  email, name, surname, id as u_id FROM users WHERE role = 'student'";
     $stm = $db->query($query);
     $rows = $stm->fetchAll(PDO::FETCH_ASSOC);
 
@@ -144,14 +144,18 @@ try {
         <div class="pageElement">
             <div class="formLogin2 table-responsive" id="specs">
                 <table class="table table-borderless myTable">
-                    <tr><th>Meno: </th> <td><?php echo ($person[0]['name']);?></td></tr>
-                    <tr><th>Priezvisko: </th> <td><?php echo $person[0]['surname'];?></td></tr>
-                    <tr><th>Email: </th> <td><?php echo $person[0]['email'];?></td></tr>
-                    <tr><th>Typ: </th> <td><?php echo $person[0]['role'];?></td></tr>
+                    <?php
+                        foreach ($person as $persona){
+                            echo ("<tr><th>Meno: </th><td>{$persona['name']}</td></tr>");
+                            echo ("<tr><th>Priezvisko: </th><td>{$persona['surname']}</td></tr>");
+                            echo ("<tr><th>Email: </th><td>{$persona['email']}</td></tr>");
+                            echo ("<tr><th>Typ: </th><td>{$persona['role']}</td></tr>");
+                        }
+                    ?>
                 </table>
             </div>
         </div>
-        <h2>Zoznam štedentov</h2>
+        <h2>Zoznam úloh študenta</h2>
         <table id="example" class="dataTable display" style="width:100%">
             <thead>
             <tr>
