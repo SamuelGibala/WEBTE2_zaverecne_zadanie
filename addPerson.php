@@ -33,19 +33,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $role = $_POST['role'];
 
     if (empty($name)) {
-        echo '<script>alert("Name is required."); window.location.href = "./";</script>';
+        echo '<script>alert("Meno je povinné"); window.location.href = "./addPerson.php";</script>';
         exit();
     }
 
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo '<script>alert("Invalid email format."); window.location.href = "./";</script>';
+        echo '<script>alert("Zlý formát emailu"); window.location.href = "./addPerson.php";</script>';
         exit();
     }
 
 
     if (strlen($password) < 6) {
-        echo '<script>alert("Password must be at least 6 characters long."); window.location.href = "./";</script>';
+        echo '<script>alert("Heslo musí mať najmenej 6 znakov"); window.location.href = "./addPerson.php";</script>';
         exit();
     }
 
@@ -263,20 +263,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </hgroup>
         <hr />
         <form method="POST" action="#" onsubmit="return validateForm()">
-            <label for="name">Meno:</label>
-            <input type="text" id="name" name="name" value="Meno" >
+            <div class="form-outline mb-4">
+                <input type="text" id="name" name="name" class="form-control">
+                <label class="form-label" for="name">Meno</label>
+            </div>
             <span id="nameError" class="error"></span>
 
-            <label for="surname">Priezvisko:</label>
-            <input type="text" id="surname" name="surname" value="Priezvisko" >
+            <div class="form-outline mb-4">
+                <input type="text" id="surname" name="surname" class="form-control">
+                <label class="form-label"  for="surname">Priezvisko</label>
+            </div>
             <span id="surnameError" class="error"></span>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" value="example@example.com" >
+            <div class="form-outline mb-4">
+                <input type="email" id="email" name="email" class="form-control">
+                <label class="form-label"  for="email">Email</label>
+            </div>
             <span id="emailError" class="error"></span>
 
-            <label for="password">Heslo:</label>
-            <input type="password" id="password" name="password" >
+            <div class="form-outline mb-4">
+                <input type="password" id="password" name="password" class="form-control">
+                <label class="form-label" for="password">Heslo</label>
+            </div>
             <span id="passwordError" class="error"></span>
 
             <label class="custom-radio" for="roleStudent">Student
@@ -296,6 +304,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </div>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.js"></script>
 <script>
     function validateForm() {
 

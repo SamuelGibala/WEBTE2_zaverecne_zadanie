@@ -45,22 +45,22 @@ if (isset($_SESSION['email'])){
     <div class="row">
         <div class="col-md-4">
             <hgroup>
-                <h1>Login</h1>
+                <h1>Prihlásenie</h1>
             </hgroup>
             <form method="post" action="process_login.php">
                 <!-- Email input -->
                 <div class="form-outline mb-4">
                     <input type="email" id="email" name="email" class="form-control" required />
-                    <label class="form-label" for="email">Email address</label>
+                    <label class="form-label" for="email">Email</label>
                 </div>
 
                 <!-- Password input -->
                 <div class="form-outline mb-4">
                     <input type="password" id="password" name="password" class="form-control" required />
-                    <label class="form-label" for="password">Password</label>
+                    <label class="form-label" for="password">Heslo</label>
                 </div>
                 <!-- Submit button -->
-                <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+                <button type="submit" class="btn btn-primary btn-block mb-4">Prihlásiť sa</button>
             </form>
         </div>
     </div>

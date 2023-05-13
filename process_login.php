@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Validate email and password
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            echo '<script>alert("Invalid email format"); window.location.href = "./";</script>';
+            echo '<script>alert("Zlý formát emailu"); window.location.href = "./";</script>';
             exit();
         }
 
@@ -42,17 +42,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     header("Location: homeS.php");
                 } else {
                     // Invalid role
-                    echo '<script>alert("Invalid user role"); window.location.href = "./";</script>';
+                    echo '<script>alert("Zlá rola používateľa"); window.location.href = "./";</script>';
                     exit();
                 }
             } else {
                 // Login failed
-                echo '<script>alert("Invalid email or password"); window.location.href = "./";</script>';
+                echo '<script>alert("Nesprávny email alebo heslo"); window.location.href = "./";</script>';
                 exit();
             }
         } else {
             // User not found
-            echo '<script>alert("User not found"); window.location.href = "./";</script>';
+            echo '<script>alert("Používateľ nenájdený"); window.location.href = "./";</script>';
             exit();
         }
     } catch (PDOException $e) {
