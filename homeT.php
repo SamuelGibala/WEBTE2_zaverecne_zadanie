@@ -96,23 +96,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             padding: 20px;
             border-radius: 5px;
         }
-
         h2 {
             margin-bottom: 20px;
         }
-
         form label {
             display: block;
             margin-bottom: 10px;
             font-weight: bold;
         }
-
         input[type="text"],
         input[type="number"],
         input[type="datetime-local"] {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
+            padding: 5px;
+            margin-bottom: 5px;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
