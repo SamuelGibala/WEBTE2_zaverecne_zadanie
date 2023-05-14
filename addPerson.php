@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="./css/table.css">
     <style>
         .container {
-            margin: auto;
+            margin-left: 20px;
             max-width: 400px;
             padding: 20px;
             border-radius: 5px;

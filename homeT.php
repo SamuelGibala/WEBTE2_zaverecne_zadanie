@@ -91,13 +91,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="stylesheet" href="./css/table.css">
     <style>
         .container {
-            margin: auto;
-            max-width: 400px;
+            margin-left: 20px;
+            max-width: 500px;
             padding: 20px;
             border-radius: 5px;
         }
         h2 {
             margin-bottom: 20px;
+            margin-right: 20px;
         }
         form label {
             display: block;
@@ -230,7 +231,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 if (is_dir($folderPath . '/' . $file) || strpos($file, '.') === 0) {
                     continue;
                 }
-                echo '<input type="checkbox" name="file[]" value="' . $file . '" style="margin-right: 5px">' . $file . '<br>';
+                echo '<div class="form-check">';
+                echo '<input class="form-check-input" type="checkbox" id="flexCheckDefault" name="file[]" value="' . $file . '" style="margin-right: 5px">' . $file . '<br>';
+                echo '<label class="form-check-label" for="flexCheckDefault"></label>';
+                echo '</div>';
             }
             ?>
             <button type='submit' class="btn btn-primary" style="width: 100%">Vytvoriť</button>
