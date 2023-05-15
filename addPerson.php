@@ -35,6 +35,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = $_POST['email'];
         $password = $_POST['password'];
         $role = $_POST['role'];
+        $stmt = $db->prepare("SELECT * FROM users");
+        $stmt->execute();
+        $persons = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($persons as $person){
+            if ($person['email'] === $email){
+                echo "<script>alert('" . get_localized('err_email_similary') . "'); window.location.href = './addPerson.php';</script>";
+                exit();
+            }
+        }
 
         if (empty($name)) {
             echo "<script>alert('" . get_localized('err_name_req') . "'); window.location.href = './addPerson.php';</script>";
