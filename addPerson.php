@@ -265,42 +265,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </hgroup>
         <hr />
         <form method="POST" action="#" onsubmit="return validateForm()">
+            <span id="nameError" class="error"></span>
             <div class="form-outline mb-4">
                 <input type="text" id="name" name="name" class="form-control">
                 <label class="form-label" for="name">Meno</label>
             </div>
-            <span id="nameError" class="error"></span>
 
+            <span id="surnameError" class="error"></span>
             <div class="form-outline mb-4">
                 <input type="text" id="surname" name="surname" class="form-control">
                 <label class="form-label"  for="surname">Priezvisko</label>
             </div>
-            <span id="surnameError" class="error"></span>
 
+            <span id="emailError" class="error"></span>
             <div class="form-outline mb-4">
                 <input type="email" id="email" name="email" class="form-control">
                 <label class="form-label"  for="email">Email</label>
             </div>
-            <span id="emailError" class="error"></span>
 
+            <span id="passwordError" class="error"></span>
             <div class="form-outline mb-4">
                 <input type="password" id="password" name="password" class="form-control">
                 <label class="form-label" for="password">Heslo</label>
             </div>
-            <span id="passwordError" class="error"></span>
 
             <label class="custom-radio" for="roleStudent">Student
                 <input type="radio" id="roleStudent" name="role" value="student" checked>
                 <span class="checkmark"></span>
             </label>
 
+            <span id="roleError" class="error"></span>
             <label class="custom-radio" for="roleTeacher">Teacher
                 <input type="radio" id="roleTeacher" name="role" value="teacher">
                 <span class="checkmark"></span>
             </label>
 
             <br><br>
-            <span id="roleError" class="error"></span>
             <div class="form-outline mb-4">
                 <button type="submit" class="btn btn-primary" style="width: 100%">Submit</button>
             </div>
@@ -310,42 +310,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <script>
     function validateForm() {
-        console.log('HERE');
-        // document.getElementById('nameError').textContent = '';
-        // document.getElementById('surnameError').textContent = '';
-        // document.getElementById('emailError').textContent = '';
-        // document.getElementById('passwordError').textContent = '';
-        // document.getElementById('roleError').textContent = '';
+        document.getElementById('nameError').textContent = '';
+        document.getElementById('surnameError').textContent = '';
+        document.getElementById('emailError').textContent = '';
+        document.getElementById('passwordError').textContent = '';
+        document.getElementById('roleError').textContent = '';
 
-        // var name = document.getElementById('name').value;
-        // var surname = document.getElementById('surname').value;
-        // var email = document.getElementById('email').value;
-        // var password = document.getElementById('password').value;
-        // var roleError =  document.getElementById('roleError').value;
-        // var role =  document.getElementById('role').value;
+        var name = document.getElementById('name').value;
+        var surname = document.getElementById('surname').value;
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        var roleError =  document.getElementById('roleError').value;
+        var roleStudent = document.getElementById('roleStudent').checked;
+        var roleTeacher = document.getElementById('roleTeacher').checked;
 
-        // if (name === '') {
-        //     document.getElementById('nameError').textContent = 'Meno je povinné';
-        //     return false;
-        // }
-        // if (surname === '') {
-        //     document.getElementById('surnameError').textContent = 'Priezvisko je povinné';
-        //     return false;
-        // }
+        if (name === '') {
+            document.getElementById('nameError').textContent = 'Meno je povinné';
+            return false;
+        }
+        if (surname === '') {
+            document.getElementById('surnameError').textContent = 'Priezvisko je povinné';
+            return false;
+        }
 
-        // var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        // if (!emailRegex.test(email)) {
-        //     document.getElementById('emailError').textContent = 'Nesprávny tvar emailu';
-        //     return false;
-        // }
-        // if (password.length < 6) {
-        //     document.getElementById('passwordError').textContent = 'Heslo musí mať najmenej 6 znakov';
-        //     return false;
-        // }
-        // if (!role.checked){
-        //     roleError.textContent = "Vyberte rolu";
-        //     return false;
-        // }
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            document.getElementById('emailError').textContent = 'Nesprávny tvar emailu';
+            return false;
+        }
+        if (password.length < 6) {
+            document.getElementById('passwordError').textContent = 'Heslo musí mať najmenej 6 znakov';
+            return false;
+        }
+        if (!roleStudent && !roleTeacher) {
+            roleError.textContent = "Vyberte rolu";
+            return false;
+        }
         return true;
     }
 </script>
