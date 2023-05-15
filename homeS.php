@@ -7,6 +7,8 @@ error_reporting(E_ALL);
 require_once('config.php');
 require_once('language.php');
 
+switch_lang();
+
 // Check if user is not logged in
 if (!isset($_SESSION['email'])) {
     header("Location: ./");
@@ -109,10 +111,13 @@ $incompleted = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <!-- Right links -->
             <ul class="navbar-nav d-flex flex-row">
                 <!-- Notification dropdown -->
-                <li><?php echo $_SESSION['email']?></li>
-                <li style="margin-left: 10px"> <a href="logout.php"><i class="fa-solid fa-right-from-bracket fa-xl" style="color: #cd0a0a;"></i></a> </li>
-
-
+                <?php get_menu_dropdown() ?>
+                <li class="ms-4 nav-item navbar-text"><?php echo $_SESSION['email']?></li>
+                <li class="ms-3 nav-item navbar-text">
+                    <a href="logout.php">
+                        <i class="fa-solid fa-right-from-bracket fa-xl" style="color: #cd0a0a;"></i>
+                    </a>
+                </li>
             </ul>
         </div>
         <!-- Container wrapper -->

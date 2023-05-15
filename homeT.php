@@ -32,46 +32,49 @@ $files = scandir($folderPath);
 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $name = $_POST['task_name'];
-    $body = $_POST['score'];
-    $start = $_POST['term_start'];
-    $deadline = $_POST['deadline'];
+    if (switch_lang()) {}
+    else {
+        $name = $_POST['task_name'];
+        $body = $_POST['score'];
+        $start = $_POST['term_start'];
+        $deadline = $_POST['deadline'];
 
-    foreach ($datas as $data){
-        if ($data['task_name'] === $name ){
-            echo '<script>alert("Názov úlohy sa už nachádza"); window.location.href = "./homeT.php";</script>';
+        foreach ($datas as $data){
+            if ($data['task_name'] === $name ){
+                echo '<script>alert("Názov úlohy sa už nachádza"); window.location.href = "./homeT.php";</script>';
+            }
         }
-    }
-    $sql = "INSERT INTO task_set (task_name, term_start, deadline, score) VALUES (?, ?, ?, ?)";
-    $stmt = $db->prepare($sql);
-    $stmt->bindParam(1, $name);
-    if ($start == null && $deadline == null ){
-        $stmt->bindParam(2, $start, PDO::PARAM_NULL);
-        $stmt->bindParam(3, $deadline, PDO::PARAM_NULL);
-    }elseif ($start == null){
-        $stmt->bindParam(2, $start, PDO::PARAM_NULL);
-        $stmt->bindParam(3, $deadline);
-    }elseif ($deadline == null){
-        $stmt->bindParam(2, $start);
-        $stmt->bindParam(3, $deadline, PDO::PARAM_NULL);
-    } else{
-        $stmt->bindParam(2, $start);
-        $stmt->bindParam(3, $deadline);
-    }
-    $stmt->bindParam(4, $body);
-    $stmt->execute();
+        $sql = "INSERT INTO task_set (task_name, term_start, deadline, score) VALUES (?, ?, ?, ?)";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(1, $name);
+        if ($start == null && $deadline == null ){
+            $stmt->bindParam(2, $start, PDO::PARAM_NULL);
+            $stmt->bindParam(3, $deadline, PDO::PARAM_NULL);
+        }elseif ($start == null){
+            $stmt->bindParam(2, $start, PDO::PARAM_NULL);
+            $stmt->bindParam(3, $deadline);
+        }elseif ($deadline == null){
+            $stmt->bindParam(2, $start);
+            $stmt->bindParam(3, $deadline, PDO::PARAM_NULL);
+        } else{
+            $stmt->bindParam(2, $start);
+            $stmt->bindParam(3, $deadline);
+        }
+        $stmt->bindParam(4, $body);
+        $stmt->execute();
 
-    $taskID = $db->lastInsertId();
+        $taskID = $db->lastInsertId();
 
-    if (isset($_POST['file'])) {
-        $selectedFiles = $_POST['file'];
-        foreach ($selectedFiles as $file) {
-            $sql = "INSERT INTO task (set_id, file_name) VALUES (?, ?)";
-            $stmt = $db->prepare($sql);
-            $stmt->bindParam(1, $taskID);
-            $stmt->bindParam(2, $file);
-            $stmt->execute();
-            header("Location: ./homeT.php");
+        if (isset($_POST['file'])) {
+            $selectedFiles = $_POST['file'];
+            foreach ($selectedFiles as $file) {
+                $sql = "INSERT INTO task (set_id, file_name) VALUES (?, ?)";
+                $stmt = $db->prepare($sql);
+                $stmt->bindParam(1, $taskID);
+                $stmt->bindParam(2, $file);
+                $stmt->execute();
+                header("Location: ./homeT.php");
+            }
         }
     }
 }
@@ -201,9 +204,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <!-- Right links -->
             <ul class="navbar-nav d-flex flex-row">
                 <!-- Notification dropdown -->
-                <li><?php echo $_SESSION['email']?></li>
-                <li style="margin-left: 10px"> <a href="logout.php"><i class="fa-solid fa-right-from-bracket fa-xl" style="color: #cd0a0a;"></i></a> </li>
-
+                <?php get_menu_dropdown() ?>
+                <li class="ms-4 nav-item navbar-text"><?php echo $_SESSION['email']?></li>
+                <li class="ms-3 nav-item navbar-text">
+                    <a href="logout.php">
+                        <i class="fa-solid fa-right-from-bracket fa-xl" style="color: #cd0a0a;"></i>
+                    </a>
+                </li>
             </ul>
         </div>
         <!-- Container wrapper -->
@@ -222,28 +229,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <form action="#" method="post" onsubmit="return validateForm();">
                 <div class="form-outline mb-4">
                     <label class="form-label" for="task_name"><?php echo get_localized('create_tasks_teacher_task_name') ?></label>
-                    <input type="text" name="task_name"  id="name" required>
+                    <input type="text" name="task_name"  id="task_name" required>
                 </div>
                 <div class="form-outline mb-4">
                     <label class="form-label" for="term_start"><?php echo get_localized('create_tasks_teacher_start_date') ?></label>
-                    <input type="datetime-local" name="term_start">
+                    <input type="datetime-local" name="term_start" id="term_start">
                 </div>
                 <div class="form-outline mb-4">
                     <label class="form-label" for="deadline"><?php echo get_localized('create_tasks_teacher_end_date') ?></label>
-                    <input type="datetime-local" name="deadline">
+                    <input type="datetime-local" name="deadline" id="deadline">
                 </div>
                 <div class="form-outline mb-4">
                     <label class="form-label"  for="score"><?php echo get_localized('create_tasks_teacher_points') ?></label>
-                    <input type="number" name="score"  id="body" required>
+                    <input type="number" name="score"  id="score" required>
                 </div>
             <?php
+            $count = 0;
             foreach ($files as $file) {
+                $count++;
                 if (is_dir($folderPath . '/' . $file) || strpos($file, '.') === 0) {
                     continue;
                 }
                 echo '<div class="form-check">';
-                echo '<input class="form-check-input" type="checkbox" id="flexCheckDefault" name="file[]" value="' . $file . '" style="margin-right: 5px">' . $file . '<br>';
-                echo '<label class="form-check-label" for="flexCheckDefault"></label>';
+                echo '<input class="form-check-input" type="checkbox" id="fileCheck' . $count . '" name="file[]" value="' . $file . '" style="margin-right: 5px">' . $file . '<br>';
+                echo '<label class="form-check-label" for="fileCheck' . $count . '"></label>';
                 echo '</div>';
             }
             ?>

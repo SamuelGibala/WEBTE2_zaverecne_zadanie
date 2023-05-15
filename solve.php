@@ -7,6 +7,8 @@ error_reporting(E_ALL);
 require_once('config.php');
 require_once('language.php');
 
+switch_lang();
+
 // Check if user is not logged in
 if (!isset($_SESSION['email'])) {
     header("Location: ./");
@@ -58,7 +60,8 @@ if (isset($_POST['id'])) {
     $stmt->bindParam(':id', $_POST['id']);
     $stmt->execute();
     $test = $stmt->fetch(PDO::FETCH_ASSOC);
-}elseif(isset($_POST['solution'])){
+}
+elseif(isset($_POST['solution'])) {
 
     $stmt = $conn->prepare("select ts.score as 'tot_score', t.task_result as 'task_result' from tests t join task_set ts on ts.id = t.set_id where t.id = :id");
     $stmt->bindParam(':id', $_POST['test_id']);
@@ -91,7 +94,8 @@ if (isset($_POST['id'])) {
     $test = $stmt->fetch(PDO::FETCH_ASSOC);
     header("Location: ./");
     exit();
-}else{
+} 
+else {
     header("Location: ./");
     exit();
 }
@@ -190,10 +194,13 @@ if (isset($_POST['id'])) {
             <!-- Right links -->
             <ul class="navbar-nav d-flex flex-row">
                 <!-- Notification dropdown -->
-                <li><?php echo $_SESSION['email']?></li>
-                <li style="margin-left: 10px"> <a href="logout.php"><i class="fa-solid fa-right-from-bracket fa-xl" style="color: #cd0a0a;"></i></a> </li>
-
-
+                <?php get_menu_dropdown() ?>
+                <li class="ms-4 nav-item navbar-text"><?php echo $_SESSION['email']?></li>
+                <li class="ms-3 nav-item navbar-text">
+                    <a href="logout.php">
+                        <i class="fa-solid fa-right-from-bracket fa-xl" style="color: #cd0a0a;"></i>
+                    </a>
+                </li>
             </ul>
         </div>
         <!-- Container wrapper -->

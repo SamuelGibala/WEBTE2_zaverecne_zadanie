@@ -1,13 +1,47 @@
 <?php
 if (!isset($_SESSION['lang']))
     $_SESSION['lang'] = 'SK';
-$_SESSION['lang'] = 'EN';
+
+function switch_lang() {
+    if (isset($_POST['SK'])) {
+        $_SESSION['lang'] = 'SK';
+        return true;
+    }
+    else if (isset($_POST['EN'])) {
+        $_SESSION['lang'] = 'EN';
+        return true;
+    }
+    else
+        return false;
+}
+
 function get_localized($term) {
     global $localized_terms;
     if (isset($localized_terms[$term]))
         return $localized_terms[$term][$_SESSION['lang']];
     else
         return 'Missing value';
+}
+
+function get_menu_dropdown() {
+    echo 
+    '
+    <form action="" method="post" id="lang_form"></form>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="./flags/' . $_SESSION['lang'] . '.png" alt="">
+        </a>
+        <ul class="dropdown-menu">
+            <li><button type="submit" form="lang_form" name="SK" class="btn dropdown-item d-flex justify-content-between">
+                <img src="./flags/SK.png" alt="slovak flag">
+                ' . get_localized('lang_slovak') . '
+            </button></li>
+            <li><button type="submit" form="lang_form" name="EN" class="btn dropdown-item d-flex justify-content-between">
+                <img src="./flags/EN.png" alt="english flag">
+                ' . get_localized('lang_english') . '
+            </button></li>
+        </ul>
+    </li>';
 }
 
 $localized_terms = [
@@ -218,6 +252,14 @@ $localized_terms = [
     'err_solve_empty' => [
         'SK' => 'Vyplňte riešenie',
         'EN' => 'Fill out input'
+    ],
+    'lang_slovak' => [
+        'SK' => 'Slovenčina',
+        'EN' => 'Slovak'
+    ],
+    'lang_english' => [
+        'SK' => 'Angličtina',
+        'EN' => 'English'
     ],
 ];
 ?>

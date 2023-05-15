@@ -1,7 +1,13 @@
 <?php
 session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once('config.php');
 require_once('language.php');
+
+switch_lang();
 
 // Check if user is not logged in
 if (!isset($_SESSION['email'])) {
@@ -12,12 +18,6 @@ if ($_SESSION['role'] === "student") {
     header("Location: homeS.php");
 }
 
-
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-require_once("config.php");
 try {
     $db = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -150,9 +150,13 @@ try {
             <!-- Right links -->
             <ul class="navbar-nav d-flex flex-row">
                 <!-- Notification dropdown -->
-                <li><?php echo $_SESSION['email']?></li>
-                <li style="margin-left: 10px"> <a href="logout.php"><i class="fa-solid fa-right-from-bracket fa-xl" style="color: #cd0a0a;"></i></a> </li>
-
+                <?php get_menu_dropdown() ?>
+                <li class="ms-4 nav-item navbar-text"><?php echo $_SESSION['email']?></li>
+                <li class="ms-3 nav-item navbar-text">
+                    <a href="logout.php">
+                        <i class="fa-solid fa-right-from-bracket fa-xl" style="color: #cd0a0a;"></i>
+                    </a>
+                </li>
             </ul>
         </div>
         <!-- Container wrapper -->

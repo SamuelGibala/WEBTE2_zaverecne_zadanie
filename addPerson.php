@@ -27,43 +27,46 @@ try {
 
 // Check if form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Retrieve form data
-    $name = $_POST['name'];
-    $surname = $_POST['surname'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $role = $_POST['role'];
+    if (switch_lang()) {}
+    else {    
+        // Retrieve form data
+        $name = $_POST['name'];
+        $surname = $_POST['surname'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $role = $_POST['role'];
 
-    if (empty($name)) {
-        echo "<script>alert('" . get_localized('err_name_req') . "'); window.location.href = './addPerson.php';</script>";
-        exit();
+        if (empty($name)) {
+            echo "<script>alert('" . get_localized('err_name_req') . "'); window.location.href = './addPerson.php';</script>";
+            exit();
+        }
+
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            echo '<script>alert("'. get_localized('err_email_format') . '"); window.location.href = "./addPerson.php";</script>';
+            exit();
+        }
+
+
+        if (strlen($password) < 6) {
+            echo '<script>alert("'. get_localized('err_pass_length') . '"); window.location.href = "./addPerson.php";</script>';
+            exit();
+        }
+
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+        $sql = "INSERT INTO users (name, surname, email, password, role) VALUES (?, ?, ?, ?,?)";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(1, $name);
+        $stmt->bindParam(2, $surname);
+        $stmt->bindParam(3, $email);
+        $stmt->bindParam(4, $hashedPassword);
+        $stmt->bindParam(5, $role);
+        if ($stmt->execute())
+            echo "User registration successful!";
+        else
+            echo "There was an error...";
     }
-
-
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo '<script>alert("'. get_localized('err_email_format') . '"); window.location.href = "./addPerson.php";</script>';
-        exit();
-    }
-
-
-    if (strlen($password) < 6) {
-        echo '<script>alert("'. get_localized('err_pass_length') . '"); window.location.href = "./addPerson.php";</script>';
-        exit();
-    }
-
-    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
-    $sql = "INSERT INTO users (name, surname, email, password, role) VALUES (?, ?, ?, ?,?)";
-    $stmt = $db->prepare($sql);
-    $stmt->bindParam(1, $name);
-    $stmt->bindParam(2, $surname);
-    $stmt->bindParam(3, $email);
-    $stmt->bindParam(4, $hashedPassword);
-    $stmt->bindParam(5, $role);
-    if ($stmt->execute())
-        echo "User registration successful!";
-    else
-        echo "There was an error...";
 }
 ?>
 <!doctype html>
@@ -241,11 +244,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- Right links -->
             <ul class="navbar-nav d-flex flex-row">
                 <!-- Notification dropdown -->
-                <li><?php echo $_SESSION['email']?></li>
-                <li style="margin-left: 10px"> 
+                <?php get_menu_dropdown() ?>
+                <li class="ms-4 nav-item navbar-text"><?php echo $_SESSION['email']?></li>
+                <li class="ms-3 nav-item navbar-text">
                     <a href="logout.php">
                         <i class="fa-solid fa-right-from-bracket fa-xl" style="color: #cd0a0a;"></i>
-                    </a> 
+                    </a>
                 </li>
             </ul>
         </div>
