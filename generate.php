@@ -3,8 +3,11 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 session_start();
+
 require 'parse.php';
 require_once('config.php');
+require_once('language.php');
+
 // Check if user is not logged in
 if (!isset($_SESSION['email'])) {
     header("Location: ./");
@@ -82,14 +85,14 @@ if (isset($_POST['set_id'])) {
                         aria-current="true"
                 >
                     <i class="fa-solid fa-pen"></i>
-                    <span>Priradené úlohy</span>
+                    <span><?php echo get_localized('menu_assigned_tasks') ?></span>
                 </a>
                 <a
                         href="./completedS.php"
                         class="list-group-item list-group-item-action py-2 ripple"
                 >
                     <i class="fa-solid fa-list"></i>
-                    <span>Vypracované úlohy</span>
+                    <span><?php echo get_localized('menu_finished_tasks') ?></span>
                 </a>
             </div>
         </div>
@@ -125,11 +128,7 @@ if (isset($_POST['set_id'])) {
                 />
             </a>
 
-            <div style="margin: 0 auto">
-                TESTY
-            </div>
-
-
+            <div style="margin: 0 auto"><?php echo get_localized('menu_header') ?></div>
 
             <!-- Right links -->
             <ul class="navbar-nav d-flex flex-row">
@@ -149,10 +148,10 @@ if (isset($_POST['set_id'])) {
 <!--Main layout-->
 <main style="margin-top: 50px">
     <div class="container pt-4">
-        <h3>Generovanie testu</h3>
+        <h3><?php echo get_localized('create_tasks') ?></h3>
         <hr />
         <div class="container ms-4 mt-4">
-            <p>Označ súbor(y), z ktorých chceš generovať test</p>
+            <p><?php echo get_localized('create_tasks_files') ?></p>
             <form method="post" action="#" onsubmit="return validateForm();">
                 <?php
                 // Loop through the array to create checkboxes
@@ -166,10 +165,11 @@ if (isset($_POST['set_id'])) {
                 }
                 ?>
                 <input type="number" hidden name="set" value="<?php echo $_POST['set_id']?>">
-                <button type="submit" class="btn btn-primary">Generuj</button>
+                <button type="submit" class="btn btn-primary"><?php echo get_localized('create_tasks_submit_btn') ?></button>
             </form>
         </div>
     </div>
+    <input type="hidden" id="err_file_req" value="<?php echo get_localized('create_tasks_file_req') ?>">
 </main>
 <script>
     function validateForm() {
@@ -187,7 +187,7 @@ if (isset($_POST['set_id'])) {
 
         // Display an alert if no checkbox is checked
         if (!isChecked) {
-            alert("Zaškrtni aspoň jedno políčko!");
+            alert(document.getElementById('err_file_req').value);
             return false; // Prevent form submission
         }
     }

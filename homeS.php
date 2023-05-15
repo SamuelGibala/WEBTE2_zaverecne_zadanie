@@ -3,7 +3,10 @@ session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
 require_once('config.php');
+require_once('language.php');
+
 // Check if user is not logged in
 if (!isset($_SESSION['email'])) {
     header("Location: ./");
@@ -56,14 +59,14 @@ $incompleted = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         aria-current="true"
                 >
                     <i class="fa-solid fa-pen"></i>
-                    <span>Priradené úlohy</span>
+                    <span><?php echo get_localized('menu_assigned_tasks') ?></span>
                 </a>
                 <a
                         href="./completedS.php"
                         class="list-group-item list-group-item-action py-2 ripple"
                 >
                     <i class="fa-solid fa-list"></i>
-                    <span>Vypracované úlohy</span>
+                    <span><?php echo get_localized('menu_done_tasks') ?></span>
                 </a>
             </div>
         </div>
@@ -99,9 +102,7 @@ $incompleted = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 />
             </a>
 
-            <div style="margin: 0 auto">
-                TESTY
-            </div>
+            <div style="margin: 0 auto"><?php echo get_localized('menu_header') ?></div>
 
 
 
@@ -124,25 +125,33 @@ $incompleted = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <main style="margin-top: 50px">
     <div class="container pt-4">
         <div class="container-fluid">
-            <h3>Dostupné testy</h3>
+            <h3><?php echo get_localized('available_tests') ?></h3>
             <hr />
             <ul class="list-group">
                 <?php
                 if (count($sets) == 0) {
-                    echo '<li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                        <h5>Žiadne testy nie sú dostupné</h5>
-                    </div>
-                    </li>';
-                }else {
-                    foreach ($sets as $set) {
-                        if ($set['score']==1){$labelScore = $set['score'] . " bod";}elseif ($set['score']>1 && $set['score']<5){$labelScore = $set['score'] . " body";}else{$labelScore = $set['score'] . " bodov";}
-                        echo '<li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span class="text-left">' . $set['task_name'] . '</span>
-                        <span class="text-center">' . $labelScore . '</span>
+                    echo 
+                    '<li class="list-group-item d-flex justify-content-between align-items-center">
                         <div>
-                            <form action="./generate.php" method="post"><input type="hidden" name="set_id" value="' . $set['id'] . '"><button type="submit" class="btn btn-primary">Generovať</button></form>
-                        </div></li>';
+                            <h5>' . get_localized('available_tests_no_found') . '</h5>
+                        </div>
+                    </li>';
+                }
+                else {
+                    foreach ($sets as $set) {
+                        $labelScore = get_localized('list_students_points_count') . ": " . $set['score'];
+                        echo 
+                        '<li class="list-group-item">
+                            <div class="row d-flex align-items-center">
+                                <div class="col-4">' . $set['task_name'] . '</div>
+                                <div class="col-4 text-center">' . $labelScore . '</div>
+                                <div class="col-4 text-end">
+                                <form action="./generate.php" method="post"><input type="hidden" name="set_id" value="' . $set['id'] . '">
+                                    <button type="submit" class="btn btn-primary">' . get_localized('create_tasks_submit_btn') . '</button>
+                                </form>
+                                </div>
+                            </div>
+                        </li>';
                     }
                 }
                 ?>
@@ -150,25 +159,33 @@ $incompleted = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
         <br />
         <div class="container-fluid">
-            <h3>Testy na vypracovanie</h3>
+            <h3><?php echo get_localized('ready_tests') ?></h3>
             <hr />
             <ul class="list-group">
                 <?php
                 if (count($incompleted) == 0) {
-                    echo '<li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                        <h5>Žiadne testy nie sú dostupné</h5>
-                    </div>
-                    </li>';
-                }else {
-                    foreach ($incompleted as $item) {
-                        if ($item['score']==1){$labelScore = $item['score'] . " bod";}elseif ($item['score']>1 && $item['score']<5){$labelScore = $item['score'] . " body";}else{$labelScore = $item['score'] . " bodov";}
-                        echo '<li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span class="text-left">' . $item['task_name'] . '</span>
-                        <span class="text-center">' . $labelScore . '</span>
+                    echo
+                    '<li class="list-group-item d-flex justify-content-between align-items-center">
                         <div>
-                            <form action="./solve.php" method="post"><input type="hidden" name="id" value="' . $item['id'] . '"><button type="submit" class="btn btn-primary">Vypracovať</button></form>
-                        </div></li>';
+                            <h5>' . get_localized('available_tests_no_found') . '</h5>
+                        </div>
+                    </li>';
+                }
+                else {
+                    foreach ($incompleted as $item) {
+                        $labelScore = get_localized('list_students_points_count') . ": " . $item['score'];
+                        echo 
+                        '<li class="list-group-item">
+                            <div class="row d-flex align-items-center">
+                                <div class="col-4">' . $item['task_name'] . '</div>
+                                <div class="col-4 text-center">' . $labelScore . '</div>
+                                <div class="col-4 text-end">
+                                    <form action="./solve.php" method="post"><input type="hidden" name="id" value="' . $item['id'] . '">
+                                        <button type="submit" class="btn btn-primary">' . get_localized('ready_tests_submit_btn') . '</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>';
                     }
                 }
                 ?>

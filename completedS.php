@@ -3,7 +3,10 @@ session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
 require_once('config.php');
+require_once('language.php');
+
 // Check if user is not logged in
 if (!isset($_SESSION['email'])) {
     header("Location: ./");
@@ -61,14 +64,14 @@ $tests = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         aria-current="true"
                 >
                     <i class="fa-solid fa-pen"></i>
-                    <span>Priradené úlohy</span>
+                    <span><?php echo get_localized('menu_assigned_tasks') ?></span>
                 </a>
                 <a
                         href="#"
                         class="list-group-item list-group-item-action py-2 ripple active"
                 >
                     <i class="fa-solid fa-list"></i>
-                    <span>Vypracované úlohy</span>
+                    <span><?php echo get_localized('menu_done_tasks') ?></span>
                 </a>
             </div>
         </div>
@@ -104,11 +107,7 @@ $tests = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 />
             </a>
 
-            <div style="margin: 0 auto">
-                TESTY
-            </div>
-
-
+            <div style="margin: 0 auto"><?php echo get_localized('menu_header') ?></div>
 
             <!-- Right links -->
             <ul class="navbar-nav d-flex flex-row">
@@ -126,28 +125,35 @@ $tests = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <main style="margin-top: 50px">
     <div class="container pt-4">
         <div class="container-fluid">
-            <h3>Vypracované testy</h3>
+            <h3><?php echo get_localized('menu_done_tasks') ?></h3>
             <hr />
             <ul class="list-group">
                 <?php
                 if (count($tests) == 0){
-                    echo '<li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                        <h5>Žiadne vypracované testy</h5>
-                    </div>
-                    </li>';
-                } else {
-                    foreach ($tests as $item) {
-                        if ($item['tot_score']==1){$labelScore = $item['score'] . "/" . $item['tot_score'] . "bodu";}else{$labelScore = $item['score'] . "/" . $item['tot_score'] . " bodov";}
-                        echo '<li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span class="text-left">' . $item['task_name'] . '</span>
-                        <span class="text-center">' . $labelScore . '</span>
+                    echo 
+                    '<li class="list-group-item d-flex justify-content-between align-items-center">
                         <div>
-                            <form action="./check.php" method="post">
-                                <input type="hidden" name="id" value="' . $item['id'] . '">
-                                <button type="submit" class="btn btn-primary">Nahliadnuť</button>
-                            </form>
-                        </div></li>';
+                            <h5>' . get_localized('done_tasks_none_found') . '</h5>
+                        </div>
+                    </li>';
+                } 
+                else {
+                    foreach ($tests as $item) {
+                        if ($item['tot_score'] == 1)
+                            $labelScore = $item['score'] . "/" . $item['tot_score'] . "bodu";
+                        else
+                            $labelScore = $item['score'] . "/" . $item['tot_score'] . " bodov";
+                        echo 
+                        '<li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="text-left">' . $item['task_name'] . '</span>
+                            <span class="text-center">' . $labelScore . '</span>
+                            <div>
+                                <form action="./check.php" method="post">
+                                    <input type="hidden" name="id" value="' . $item['id'] . '">
+                                    <button type="submit" class="btn btn-primary">' . get_localized('done_tasks_detail') . '</button>
+                                </form>
+                            </div>
+                        </li>';
                     }
                 }
                 ?>

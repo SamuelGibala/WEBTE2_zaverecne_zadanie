@@ -5,6 +5,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require_once('config.php');
+require_once('language.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
@@ -42,17 +43,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     header("Location: homeS.php");
                 } else {
                     // Invalid role
-                    echo '<script>alert("Zlá rola používateľa"); window.location.href = "./";</script>';
+                    echo '<script>alert("' . get_localized('login_wrong_role') . '"); window.location.href = "./";</script>';
                     exit();
                 }
             } else {
                 // Login failed
-                echo '<script>alert("Nesprávny email alebo heslo"); window.location.href = "./";</script>';
+                echo '<script>alert("' . get_localized('login_wrong_credentials') . '"); window.location.href = "./";</script>';
                 exit();
             }
         } else {
             // User not found
-            echo '<script>alert("Používateľ nenájdený"); window.location.href = "./";</script>';
+            echo '<script>alert("' . get_localized('login_user_not_found') . '"); window.location.href = "./";</script>';
             exit();
         }
     } catch (PDOException $e) {

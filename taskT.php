@@ -1,6 +1,8 @@
 <?php
 session_start();
 require_once('config.php');
+require_once('language.php');
+
 // Check if user is not logged in
 if (!isset($_SESSION['email'])) {
     header("Location: ./");
@@ -84,7 +86,7 @@ try {
                     aria-current="true"
                 >
                     <i class="fa-solid fa-pen"></i>
-                    <span>Generovanie úloh</span>
+                    <span><?php echo get_localized('menu_create_tasks') ?></span>
                 </a>
                 <a
                     href="#"
@@ -92,7 +94,7 @@ try {
                     aria-current="true"
                 >
                     <i class="fa-solid fa-list-check"></i>
-                    <span>Vygenerované úlohy</span>
+                    <span><?php echo get_localized('menu_list_tasks') ?></span>
                 </a>
                 <a
                     href="./completedT.php"
@@ -100,14 +102,14 @@ try {
                     aria-current="true"
                 >
                     <i class="fa-solid fa-list"></i>
-                    <span>Zoznam študentov</span>
+                    <span><?php echo get_localized('menu_list_students') ?></span>
                 </a>
                 <a
                     href="./addPerson.php"
                     class="list-group-item list-group-item-action py-2 ripple"
                 >
                     <i class="fa-solid fa-user-plus"></i>
-                    <span>Pridať osobu</span>
+                    <span><?php echo get_localized('menu_create_user') ?></span>
                 </a>
             </div>
         </div>
@@ -143,9 +145,7 @@ try {
                 />
             </a>
 
-            <div style="margin: 0 auto">
-                TESTY
-            </div>
+            <div style="margin: 0 auto"><?php echo get_localized('menu_header') ?></div>
 
             <!-- Right links -->
             <ul class="navbar-nav d-flex flex-row">
@@ -163,22 +163,21 @@ try {
 <!--Main layout-->
 <main style="margin-top: 50px">
     <div class="container pt-4">
-        <h2>Zoznam študentov</h2>
+        <h2><?php echo get_localized('menu_list_tasks') ?></h2>
         <hr />
         <div class="table-responsive">
             <table id="example" class="dataTable display" style="width:100%">
                 <thead>
                 <tr>
-                    <th>Názov úlohy</th>
-                    <th>Dátum odkedy</th>
-                    <th>Dátum dokedy</th>
-                    <th>Body</th>
+                    <th><?php echo get_localized('create_tasks_teacher_task_name') ?></th>
+                    <th><?php echo get_localized('create_tasks_teacher_start_date') ?></th>
+                    <th><?php echo get_localized('create_tasks_teacher_end_date') ?></th>
+                    <th><?php echo get_localized('create_tasks_teacher_points') ?></th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php
-                foreach ($rows as $row)
-                {
+                foreach ($rows as $row) {
                     echo("<tr><td>{$row['task_name']}</td> <td>{$row['term_start']}</td> <td>{$row['deadline']}</td><td>{$row['score']}</td></tr>");
                 }
                 ?>
@@ -199,12 +198,6 @@ try {
             "pagingType": "full_numbers",
             "bInfo" : false
         });
-    });
-    $('#example tbody').on('click', 'tr', function() {
-        var data = table.row(this).data();
-        var id = data[0];
-        console.log(id);
-        window.location.href = "detail.php?id=" + id;
     });
 </script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.js"></script>

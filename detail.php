@@ -5,7 +5,10 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 session_start();
 $detail_id = $_GET["id"];
+
 require_once('config.php');
+require_once('language.php');
+
 // Check if user is not logged in
 if (!isset($_SESSION['email'])) {
     header("Location: ./");
@@ -76,21 +79,29 @@ try {
                     aria-current="true"
                 >
                     <i class="fa-solid fa-pen"></i>
-                    <span>Generovanie úloh</span>
+                    <span><?php echo get_localized('menu_create_tasks') ?></span>
+                </a>
+                <a
+                    href="./taskT.php"
+                    class="list-group-item list-group-item-action py-2 ripple "
+                    aria-current="true"
+                >
+                    <i class="fa-solid fa-list-check"></i>
+                    <span><?php echo get_localized('menu_list_tasks') ?></span>
                 </a>
                 <a
                     href="./completedT.php"
                     class="list-group-item list-group-item-action py-2 ripple "
                 >
                     <i class="fa-solid fa-list"></i>
-                    <span>Zoznam študentov</span>
+                    <span><?php echo get_localized('menu_list_students') ?></span>
                 </a>
                 <a
                         href="./addPerson.php"
                         class="list-group-item list-group-item-action py-2 ripple"
                 >
                     <i class="fa-solid fa-user-plus"></i>
-                    <span>Pridať osobu</span>
+                    <span><?php echo get_localized('menu_create_user') ?></span>
                 </a>
             </div>
         </div>
@@ -126,9 +137,7 @@ try {
                 />
             </a>
 
-            <div style="margin: 0 auto">
-                TESTY
-            </div>
+            <div style="margin: 0 auto"><?php echo get_localized('menu_header') ?></div>
 
             <!-- Right links -->
             <ul class="navbar-nav d-flex flex-row">
@@ -146,45 +155,48 @@ try {
 <!--Main layout-->
 <main style="margin-top: 50px">
     <div class="container pt-4">
-        <h2>Detail Študenta</h2>
+        <h2><?php echo get_localized('student_detail') ?></h2>
         <hr />
         <div class="pageElement">
             <div class="formLogin2 table-responsive" id="specs">
                 <table class="table table-borderless myTable">
                     <?php
-                        foreach ($person as $persona){
-                            echo ("<tr><th>Meno: </th><td>{$persona['name']}</td></tr>");
-                            echo ("<tr><th>Priezvisko: </th><td>{$persona['surname']}</td></tr>");
+                        foreach ($person as $persona) {
+                            echo ("<tr><th>" . get_localized('form_name') . ": </th><td>{$persona['name']}</td></tr>");
+                            echo ("<tr><th>" . get_localized('form_surname') . ": </th><td>{$persona['surname']}</td></tr>");
                             echo ("<tr><th>Email: </th><td>{$persona['email']}</td></tr>");
-                            echo ("<tr><th>Typ: </th><td>{$persona['role']}</td></tr>");
+                            echo ("<tr><th>" . get_localized('form_role') . ": </th><td>{$persona['role']}</td></tr>");
                         }
                     ?>
                 </table>
             </div>
         </div>
-        <h2>Zoznam úloh študenta</h2>
+        <h2><?php echo get_localized('student_detail_task_list') ?></h2>
         <hr />
         <ul class="list-group">
             <?php
-            if (count($tests) == 0){
-                echo '<li class="list-group-item d-flex justify-content-between align-items-center">
+            if (count($tests) == 0) {
+                echo 
+                '<li class="list-group-item d-flex justify-content-between align-items-center">
                     <div>
-                        <h5>Žiadne vypracované testy</h5>
+                        <h5>' . get_localized('done_tasks_none_found') . '</h5>
                     </div>
-                    </li>';
-            } else {
+                </li>';
+            } 
+            else {
                 foreach ($tests as $item) {
-                    if ($item['tot_score']==1){$labelScore = $item['score'] . "/" . $item['tot_score'] . "bodu";}else{$labelScore = $item['score'] . "/" . $item['tot_score'] . " bodov";}
-                    echo '<li class="list-group-item d-flex justify-content-between align-items-center">                 
-                            <span class="text-left">' . $item['task_name'] . '</span>
-                            <span class="text-center">' . $labelScore . '</span>
-                            <div>
+                    $labelScore = $item['score'] . "/" . $item['tot_score'] . " " . get_localized('student_detail_points');
+                    echo 
+                    '<li class="list-group-item d-flex justify-content-between align-items-center">                 
+                        <span class="text-left">' . $item['task_name'] . '</span>
+                        <span class="text-center">' . $labelScore . '</span>
+                        <div>
                             <form action="./checkT.php" method="post">
                                 <input type="hidden" name="id" value="' . $item['id'] . '">
-                                <button type="submit" class="btn btn-primary">Nahliadnuť</button>
+                                <button type="submit" class="btn btn-primary">' . get_localized('done_tasks_detail') . '</button>
                             </form>
-                            </div>
-                        </li>';
+                        </div>
+                    </li>';
                 }
             }
             ?>

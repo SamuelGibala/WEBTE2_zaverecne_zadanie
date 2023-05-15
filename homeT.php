@@ -1,6 +1,12 @@
 <?php
 session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once('config.php');
+require_once('language.php');
+
 // Check if user is not logged in
 if (!isset($_SESSION['email'])) {
     header("Location: ./");
@@ -131,7 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         aria-current="true"
                 >
                     <i class="fa-solid fa-pen"></i>
-                    <span>Generovanie úloh</span>
+                    <span><?php echo get_localized('menu_create_tasks') ?></span>
                 </a>
                 <a
                         href="./taskT.php"
@@ -139,7 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         aria-current="true"
                 >
                     <i class="fa-solid fa-list-check"></i>
-                    <span>Vygenerované úlohy</span>
+                    <span><?php echo get_localized('menu_list_tasks') ?></span>
                 </a>
                 <a
                         href="./completedT.php"
@@ -147,14 +153,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         aria-current="true"
                 >
                     <i class="fa-solid fa-list"></i>
-                    <span>Zoznam študentov</span>
+                    <span><?php echo get_localized('menu_list_students') ?></span>
                 </a>
                 <a
                         href="./addPerson.php"
                         class="list-group-item list-group-item-action py-2 ripple"
                 >
                     <i class="fa-solid fa-user-plus"></i>
-                    <span>Pridať osobu</span>
+                    <span><?php echo get_localized('menu_create_user') ?></span>
                 </a>
             </div>
         </div>
@@ -190,18 +196,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 />
             </a>
 
-            <div style="margin: 0 auto">
-                TESTY
-            </div>
-
-
+            <div style="margin: 0 auto"><?php echo get_localized('menu_header') ?></div>
 
             <!-- Right links -->
             <ul class="navbar-nav d-flex flex-row">
                 <!-- Notification dropdown -->
                 <li><?php echo $_SESSION['email']?></li>
                 <li style="margin-left: 10px"> <a href="logout.php"><i class="fa-solid fa-right-from-bracket fa-xl" style="color: #cd0a0a;"></i></a> </li>
-
 
             </ul>
         </div>
@@ -215,24 +216,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <main style="margin-top: 50px">
     <div class="container pt-4">
         <hgroup>
-            <h2>Vygenerovanie úloh pre študentov</h2>
+            <h2><?php echo get_localized('create_tasks_teacher') ?></h2>
         </hgroup>
         <hr />
         <form action="#" method="post" onsubmit="return validateForm();">
                 <div class="form-outline mb-4">
-                    <label class="form-label" for="task_name">Názov úlohy</label>
+                    <label class="form-label" for="task_name"><?php echo get_localized('create_tasks_teacher_task_name') ?></label>
                     <input type="text" name="task_name"  id="name" required>
                 </div>
                 <div class="form-outline mb-4">
-                    <label class="form-label" for="term_start">Dátum odkedy</label>
-                    <input type="datetime-local" name="term_start"  id="InputDate" >
+                    <label class="form-label" for="term_start"><?php echo get_localized('create_tasks_teacher_start_date') ?></label>
+                    <input type="datetime-local" name="term_start">
                 </div>
                 <div class="form-outline mb-4">
-                    <label class="form-label" for="deadline">Dátum dokedy</label>
-                    <input type="datetime-local" name="deadline"  id="InputDate" >
+                    <label class="form-label" for="deadline"><?php echo get_localized('create_tasks_teacher_end_date') ?></label>
+                    <input type="datetime-local" name="deadline">
                 </div>
                 <div class="form-outline mb-4">
-                    <label class="form-label"  for="score">Body</label>
+                    <label class="form-label"  for="score"><?php echo get_localized('create_tasks_teacher_points') ?></label>
                     <input type="number" name="score"  id="body" required>
                 </div>
             <?php
@@ -246,10 +247,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 echo '</div>';
             }
             ?>
-            <button type='submit' class="btn btn-primary" style="width: 100%">Vytvoriť</button>
+            <button type='submit' class="btn btn-primary" style="width: 100%"><?php echo get_localized('create_tasks_teacher_submit_btn') ?></button>
         </form>
     </div>
 </main>
+<input type="hidden" id="err_missing_file" value="<?php echo get_localized('create_tasks_teacher_submit_btn') ?>">
 <script>
     function validateForm() {
 
@@ -264,7 +266,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         if (!isChecked) {
-            alert("Zaškrtni aspoň jedno políčko!");
+            alert(document.getElementById('err_missing_file').value);
             return false; // Prevent form submission
         }
     }

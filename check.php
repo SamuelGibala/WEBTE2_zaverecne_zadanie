@@ -4,6 +4,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 require_once('config.php');
+require_once('language.php');
+
 // Check if user is not logged in
 if (!isset($_SESSION['email'])) {
     header("Location: ./");
@@ -72,14 +74,14 @@ if (isset($_POST['id'])) {
                     aria-current="true"
                 >
                     <i class="fa-solid fa-pen"></i>
-                    <span>Priradené úlohy</span>
+                    <span><?php echo get_localized('menu_assigned_tasks') ?></span>
                 </a>
                 <a
                     href="./completedS.php"
                     class="list-group-item list-group-item-action py-2 ripple"
                 >
                     <i class="fa-solid fa-list"></i>
-                    <span>Vypracované úlohy</span>
+                    <span><?php echo get_localized('menu_done_tasks') ?></span>
                 </a>
             </div>
         </div>
@@ -115,18 +117,13 @@ if (isset($_POST['id'])) {
                 />
             </a>
 
-            <div style="margin: 0 auto">
-                TESTY
-            </div>
-
-
+            <div style="margin: 0 auto"><?php echo get_localized('menu_header') ?></div>
 
             <!-- Right links -->
             <ul class="navbar-nav d-flex flex-row">
                 <!-- Notification dropdown -->
                 <li><?php echo $_SESSION['email']?></li>
                 <li style="margin-left: 10px"> <a href="logout.php"><i class="fa-solid fa-right-from-bracket fa-xl" style="color: #cd0a0a;"></i></a> </li>
-
 
             </ul>
         </div>
@@ -151,19 +148,19 @@ if (isset($_POST['id'])) {
                             echo '<img src="./zadania/images/' . $test['task_image'] . '" style="width:60%">';
                         } ?>
                         <p>
-                            <strong>Správne riešenie:</strong>
+                            <strong><?php echo get_localized('check_correct_result') ?></strong>
                         </p>
                         <p>
                             <strong>$<?php echo $test['task_result']?>$</strong>
                         </p>
                         <p>
-                            <strong>Zadané riešenie:</strong>
+                            <strong><?php echo get_localized('check_input') ?></strong>
                         </p>
                         <p>
                             <strong>$<?php echo $test['student_result']?>$</strong>
                         </p>
                         <p>
-                            <strong>Získané body: <?php echo $test['score']?></strong>
+                            <strong><?php echo get_localized('check_points') ?> <?php echo $test['score']?></strong>
                         </p>
                     </div>
 

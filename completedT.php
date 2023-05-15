@@ -1,6 +1,12 @@
 <?php
 session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once('config.php');
+require_once('language.php');
+
 // Check if user is not logged in
 if (!isset($_SESSION['email'])) {
     header("Location: ./");
@@ -9,12 +15,6 @@ if (!isset($_SESSION['email'])) {
 if ($_SESSION['role'] === "student") {
     header("Location: homeS.php");
 }
-
-
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 require_once("config.php");
 try {
     $db = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
@@ -88,7 +88,7 @@ try {
                     aria-current="true"
                 >
                     <i class="fa-solid fa-pen"></i>
-                    <span>Generovanie úloh</span>
+                    <span><?php echo get_localized('menu_create_tasks') ?></span>
                 </a>
                 <a
                         href="./taskT.php"
@@ -96,7 +96,7 @@ try {
                         aria-current="true"
                 >
                     <i class="fa-solid fa-list-check"></i>
-                    <span>Vygenerované úlohy</span>
+                    <span><?php echo get_localized('menu_list_tasks') ?></span>
                 </a>
                 <a
                     href="#"
@@ -104,14 +104,14 @@ try {
                     aria-current="true"
                 >
                     <i class="fa-solid fa-list"></i>
-                    <span>Zoznam študentov</span>
+                    <span><?php echo get_localized('menu_list_students') ?></span>
                 </a>
                 <a
                         href="./addPerson.php"
                         class="list-group-item list-group-item-action py-2 ripple"
                 >
                     <i class="fa-solid fa-user-plus"></i>
-                    <span>Pridať osobu</span>
+                    <span><?php echo get_localized('menu_create_user') ?></span>
                 </a>
             </div>
         </div>
@@ -147,9 +147,7 @@ try {
                 />
             </a>
 
-            <div style="margin: 0 auto">
-                TESTY
-            </div>
+            <div style="margin: 0 auto"><?php echo get_localized('menu_header') ?></div>
 
             <!-- Right links -->
             <ul class="navbar-nav d-flex flex-row">
@@ -167,27 +165,26 @@ try {
 <!--Main layout-->
 <main style="margin-top: 50px">
     <div class="container pt-4">
-        <h2>Zoznam študentov</h2>
+        <h2><?php echo get_localized('menu_list_students') ?></h2>
         <hr />
         <div class="table-responsive">
            <table id="example" class="dataTable display" style="width:100%">
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Meno</th>
-                        <th>Priezvisko</th>
+                        <th><?php echo get_localized('form_name') ?></th>
+                        <th><?php echo get_localized('form_surname') ?></th>
                         <th>Email</th>
-                        <th>Počet vygenerovaných úloh</th>
-                        <th>Počet odovzdaných úloh</th>
-                        <th>Počet bodov</th>
+                        <th><?php echo get_localized('list_students_assigned_tasks_count') ?></th>
+                        <th><?php echo get_localized('list_students_finished_tasks_count') ?></th>
+                        <th><?php echo get_localized('list_students_points_count') ?></th>
                     </tr>
                 </thead>
                <tbody>
                    <?php
-                       foreach ($rows as $row)
-                       {
-                       echo("<tr><td>{$row['user_id']}</td> <td>{$row['name']}</td> <td>{$row['surname']}</td><td>{$row['email']}</td><td>{$row['number_of_tasks']}</td><td>{$row['number_submit']}</td><td>{$row['total_score']}</td></tr> ");
-                       }
+                    foreach ($rows as $row) {
+                        echo("<tr><td>{$row['user_id']}</td> <td>{$row['name']}</td> <td>{$row['surname']}</td><td>{$row['email']}</td><td>{$row['number_of_tasks']}</td><td>{$row['number_submit']}</td><td>{$row['total_score']}</td></tr> ");
+                    }
                    ?>
                </tbody>
             </table>

@@ -41,13 +41,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo '<script>alert("Zlý formát emailu"); window.location.href = "./addPerson.php";</script>';
+        echo '<script>alert("'. get_localized('err_email_format') . '"); window.location.href = "./addPerson.php";</script>';
         exit();
     }
 
 
     if (strlen($password) < 6) {
-        echo '<script>alert("Heslo musí mať najmenej 6 znakov"); window.location.href = "./addPerson.php";</script>';
+        echo '<script>alert("'. get_localized('err_pass_length') . '"); window.location.href = "./addPerson.php";</script>';
         exit();
     }
 
@@ -60,10 +60,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindParam(3, $email);
     $stmt->bindParam(4, $hashedPassword);
     $stmt->bindParam(5, $role);
-    $stmt->execute();
-
-    // Display success message
-    echo "User registration successful!";
+    if ($stmt->execute())
+        echo "User registration successful!";
+    else
+        echo "There was an error...";
 }
 ?>
 <!doctype html>
@@ -177,15 +177,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     aria-current="true"
                 >
                     <i class="fa-solid fa-pen"></i>
-                    <span>Generovanie úloh</span>
+                    <span><?php echo get_localized('menu_create_tasks') ?></span>
                 </a>
                 <a
-                        href="./taskT.php"
-                        class="list-group-item list-group-item-action py-2 ripple "
-                        aria-current="true"
+                    href="./taskT.php"
+                    class="list-group-item list-group-item-action py-2 ripple "
+                    aria-current="true"
                 >
                     <i class="fa-solid fa-list-check"></i>
-                    <span>Vygenerované úlohy</span>
+                    <span><?php echo get_localized('menu_list_tasks') ?></span>
                 </a>
                 <a
                     href="./completedT.php"
@@ -193,14 +193,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     aria-current="true"
                 >
                     <i class="fa-solid fa-list"></i>
-                    <span>Zoznam študentov</span>
+                    <span><?php echo get_localized('menu_list_students') ?></span>
                 </a>
                 <a
                     href="#"
                     class="list-group-item list-group-item-action py-2 ripple active"
                 >
                     <i class="fa-solid fa-user-plus"></i>
-                    <span>Pridať osobu</span>
+                    <span><?php echo get_localized('menu_create_user') ?></span>
                 </a>
             </div>
         </div>
@@ -236,19 +236,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 />
             </a>
 
-            <div style="margin: 0 auto">
-                TESTY
-            </div>
-
-
+            <div style="margin: 0 auto"><?php echo get_localized('menu_header') ?></div>
 
             <!-- Right links -->
             <ul class="navbar-nav d-flex flex-row">
                 <!-- Notification dropdown -->
                 <li><?php echo $_SESSION['email']?></li>
-                <li style="margin-left: 10px"> <a href="logout.php"><i class="fa-solid fa-right-from-bracket fa-xl" style="color: #cd0a0a;"></i></a> </li>
-
-
+                <li style="margin-left: 10px"> 
+                    <a href="logout.php">
+                        <i class="fa-solid fa-right-from-bracket fa-xl" style="color: #cd0a0a;"></i>
+                    </a> 
+                </li>
             </ul>
         </div>
         <!-- Container wrapper -->
@@ -261,48 +259,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <main style="margin-top: 50px">
     <div class="container pt-4">
         <hgroup>
-            <h2>Pridať používateľa</h2>
+            <h2><?php echo get_localized('menu_create_user') ?></h2>
         </hgroup>
         <hr />
         <form method="POST" action="#" onsubmit="return validateForm()">
-            <span id="nameError" class="error"></span>
+            <span id="nameError" class="error d-none"><?php echo get_localized('err_name_req') ?></span>
             <div class="form-outline mb-4">
                 <input type="text" id="name" name="name" class="form-control">
-                <label class="form-label" for="name">Meno</label>
+                <label class="form-label" for="name"><?php echo get_localized('form_name') ?></label>
             </div>
 
-            <span id="surnameError" class="error"></span>
+            <span id="surnameError" class="error d-none"><?php echo get_localized('err_surname_req') ?></span>
             <div class="form-outline mb-4">
                 <input type="text" id="surname" name="surname" class="form-control">
-                <label class="form-label"  for="surname">Priezvisko</label>
+                <label class="form-label"  for="surname"><?php echo get_localized('form_surname') ?></label>
             </div>
 
-            <span id="emailError" class="error"></span>
+            <span id="emailError" class="error d-none"><?php echo get_localized('err_email_format') ?></span>
             <div class="form-outline mb-4">
                 <input type="email" id="email" name="email" class="form-control">
                 <label class="form-label"  for="email">Email</label>
             </div>
 
-            <span id="passwordError" class="error"></span>
+            <span id="passwordError" class="error d-none"><?php echo get_localized('err_pass_length') ?></span>
             <div class="form-outline mb-4">
                 <input type="password" id="password" name="password" class="form-control">
-                <label class="form-label" for="password">Heslo</label>
+                <label class="form-label" for="password"><?php echo get_localized('form_pass') ?></label>
             </div>
 
-            <label class="custom-radio" for="roleStudent">Student
+            <span id="roleError" class="error d-none"><?php echo get_localized('err_role_req') ?></span>
+            <label class="custom-radio" for="roleStudent"><?php echo get_localized('create_user_role_student') ?>
                 <input type="radio" id="roleStudent" name="role" value="student" checked>
                 <span class="checkmark"></span>
             </label>
 
-            <span id="roleError" class="error"></span>
-            <label class="custom-radio" for="roleTeacher">Teacher
+            <label class="custom-radio" for="roleTeacher"><?php echo get_localized('create_user_role_teacher') ?>
                 <input type="radio" id="roleTeacher" name="role" value="teacher">
                 <span class="checkmark"></span>
             </label>
 
             <br><br>
             <div class="form-outline mb-4">
-                <button type="submit" class="btn btn-primary" style="width: 100%">Submit</button>
+                <button type="submit" class="btn btn-primary" style="width: 100%"><?php echo get_localized('create_user_submit_btn') ?></button>
             </div>
         </form>
     </div>
@@ -310,40 +308,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <script>
     function validateForm() {
-        document.getElementById('nameError').textContent = '';
-        document.getElementById('surnameError').textContent = '';
-        document.getElementById('emailError').textContent = '';
-        document.getElementById('passwordError').textContent = '';
-        document.getElementById('roleError').textContent = '';
+        document.getElementById('nameError').classList.add("d-none");
+        document.getElementById('surnameError').classList.add("d-none");
+        document.getElementById('emailError').classList.add("d-none");
+        document.getElementById('passwordError').classList.add("d-none");
+        document.getElementById('roleError').classList.add("d-none");
 
         var name = document.getElementById('name').value;
         var surname = document.getElementById('surname').value;
         var email = document.getElementById('email').value;
         var password = document.getElementById('password').value;
-        var roleError =  document.getElementById('roleError').value;
         var roleStudent = document.getElementById('roleStudent').checked;
         var roleTeacher = document.getElementById('roleTeacher').checked;
 
         if (name === '') {
-            document.getElementById('nameError').textContent = 'Meno je povinné';
+            document.getElementById('nameError').classList.remove("d-none");
             return false;
         }
         if (surname === '') {
-            document.getElementById('surnameError').textContent = 'Priezvisko je povinné';
+            document.getElementById('surnameError').classList.remove("d-none");
             return false;
         }
 
         var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-            document.getElementById('emailError').textContent = 'Nesprávny tvar emailu';
+            document.getElementById('emailError').classList.remove("d-none");
             return false;
         }
         if (password.length < 6) {
-            document.getElementById('passwordError').textContent = 'Heslo musí mať najmenej 6 znakov';
+            document.getElementById('passwordError').classList.remove("d-none");
             return false;
         }
         if (!roleStudent && !roleTeacher) {
-            roleError.textContent = "Vyberte rolu";
+            document.getElementById('roleError').classList.remove("d-none");
             return false;
         }
         return true;
