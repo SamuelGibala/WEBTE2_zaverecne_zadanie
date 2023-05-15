@@ -178,8 +178,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <span>Generovanie úloh</span>
                 </a>
                 <a
+                        href="./taskT.php"
+                        class="list-group-item list-group-item-action py-2 ripple "
+                        aria-current="true"
+                >
+                    <i class="fa-solid fa-list-check"></i>
+                    <span>Vygenerované úlohy</span>
+                </a>
+                <a
                     href="./completedT.php"
                     class="list-group-item list-group-item-action py-2 ripple"
+                    aria-current="true"
                 >
                     <i class="fa-solid fa-list"></i>
                     <span>Zoznam študentov</span>

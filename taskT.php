@@ -21,16 +21,12 @@ try {
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     //$query = "SELECT  u.id, u.email, u.name, u.surname, COUNT(t.student_id) as Pocet_uloh FROM users u WHERE role = 'student' join tests t on u.id = t.student_id";
-   /* $query =  "SELECT u.id AS user_id, u.name, u.surname, u.email, COUNT(t.task) AS number_of_tasks, SUM(t.score) AS total_score, COUNT(t.student_result) AS number_submit
-                    FROM users u
-                        JOIN tests t ON u.id = t.student_id
-                            WHERE u.role = 'student'
-                                GROUP BY u.id, u.name, u.surname, u.email";*/
-    $query = "SELECT u.id AS user_id, u.name, u.surname, u.email, COUNT(t.task) AS number_of_tasks, SUM(t.score) AS total_score, COUNT(t.student_result) AS number_submit
-                FROM users u
-                    LEFT JOIN tests t ON u.id = t.student_id
-                        WHERE u.role = 'student'
-                            GROUP BY u.id, u.name, u.surname, u.email";
+    /* $query =  "SELECT u.id AS user_id, u.name, u.surname, u.email, COUNT(t.task) AS number_of_tasks, SUM(t.score) AS total_score, COUNT(t.student_result) AS number_submit
+                     FROM users u
+                         JOIN tests t ON u.id = t.student_id
+                             WHERE u.role = 'student'
+                                 GROUP BY u.id, u.name, u.surname, u.email";*/
+    $query = "SELECT  * FROM task_set";
     $stm = $db->query($query);
     $rows = $stm->fetchAll(PDO::FETCH_ASSOC);
 
@@ -91,24 +87,24 @@ try {
                     <span>Generovanie úloh</span>
                 </a>
                 <a
-                        href="./taskT.php"
-                        class="list-group-item list-group-item-action py-2 ripple "
-                        aria-current="true"
+                    href="#"
+                    class="list-group-item list-group-item-action py-2 ripple active "
+                    aria-current="true"
                 >
                     <i class="fa-solid fa-list-check"></i>
                     <span>Vygenerované úlohy</span>
                 </a>
                 <a
-                    href="#"
-                    class="list-group-item list-group-item-action py-2 ripple active"
+                    href="./completedT.php"
+                    class="list-group-item list-group-item-action py-2 ripple "
                     aria-current="true"
                 >
                     <i class="fa-solid fa-list"></i>
                     <span>Zoznam študentov</span>
                 </a>
                 <a
-                        href="./addPerson.php"
-                        class="list-group-item list-group-item-action py-2 ripple"
+                    href="./addPerson.php"
+                    class="list-group-item list-group-item-action py-2 ripple"
                 >
                     <i class="fa-solid fa-user-plus"></i>
                     <span>Pridať osobu</span>
@@ -170,26 +166,23 @@ try {
         <h2>Zoznam študentov</h2>
         <hr />
         <div class="table-responsive">
-           <table id="example" class="dataTable display" style="width:100%">
+            <table id="example" class="dataTable display" style="width:100%">
                 <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Meno</th>
-                        <th>Priezvisko</th>
-                        <th>Email</th>
-                        <th>Počet vygenerovaných úloh</th>
-                        <th>Počet odovzdaných úloh</th>
-                        <th>Počet bodov</th>
-                    </tr>
+                <tr>
+                    <th>Názov úlohy</th>
+                    <th>Dátum odkedy</th>
+                    <th>Dátum dokedy</th>
+                    <th>Body</th>
+                </tr>
                 </thead>
-               <tbody>
-                   <?php
-                       foreach ($rows as $row)
-                       {
-                       echo("<tr><td>{$row['user_id']}</td> <td>{$row['name']}</td> <td>{$row['surname']}</td><td>{$row['email']}</td><td>{$row['number_of_tasks']}</td><td>{$row['number_submit']}</td><td>{$row['total_score']}</td></tr> ");
-                       }
-                   ?>
-               </tbody>
+                <tbody>
+                <?php
+                foreach ($rows as $row)
+                {
+                    echo("<tr><td>{$row['task_name']}</td> <td>{$row['term_start']}</td> <td>{$row['deadline']}</td><td>{$row['score']}</td></tr>");
+                }
+                ?>
+                </tbody>
             </table>
         </div>
     </div>
@@ -202,7 +195,7 @@ try {
     ?>
     $(document).ready( function () {
         table = $('#example').DataTable({
-            order: [[2, 'asc']],
+            order: [[0, 'asc']],
             "pagingType": "full_numbers",
             "bInfo" : false
         });
