@@ -1,5 +1,8 @@
 <?php
 session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 if (isset($_SESSION['email'])){
     if ($_SESSION['role'] === "teacher") {
         header("Location: homeT.php");
@@ -7,6 +10,7 @@ if (isset($_SESSION['email'])){
         header("Location: homeS.php");
     }
 }
+require_once('language.php');
 ?>
 <!DOCTYPE html>
 <html lang="sk">
@@ -45,7 +49,7 @@ if (isset($_SESSION['email'])){
     <div class="row">
         <div class="col-md-4">
             <hgroup>
-                <h1>Prihlásenie</h1>
+                <h1><?php echo get_localized('login_header') ?></h1>
             </hgroup>
             <form method="post" action="process_login.php">
                 <!-- Email input -->
@@ -57,10 +61,10 @@ if (isset($_SESSION['email'])){
                 <!-- Password input -->
                 <div class="form-outline mb-4">
                     <input type="password" id="password" name="password" class="form-control" required />
-                    <label class="form-label" for="password">Heslo</label>
+                    <label class="form-label" for="password"><?php echo get_localized('login_pass') ?></label>
                 </div>
                 <!-- Submit button -->
-                <button type="submit" class="btn btn-primary btn-block mb-4">Prihlásiť sa</button>
+                <button type="submit" class="btn btn-primary btn-block mb-4"><?php echo get_localized('login_btn') ?></button>
             </form>
         </div>
     </div>

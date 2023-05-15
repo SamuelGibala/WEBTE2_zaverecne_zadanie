@@ -4,6 +4,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 require_once('config.php');
+require_once('language.php');
+
 if (!isset($_SESSION['email'])) {
     header("Location: ./");
     exit();
@@ -33,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $role = $_POST['role'];
 
     if (empty($name)) {
-        echo '<script>alert("Meno je povinné"); window.location.href = "./addPerson.php";</script>';
+        echo "<script>alert('" . get_localized('err_name_req') . "'); window.location.href = './addPerson.php';</script>";
         exit();
     }
 
@@ -300,7 +302,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <br><br>
             <span id="roleError" class="error"></span>
             <div class="form-outline mb-4">
-                <input type="submit" class="btn btn-primary" value="Pridať" style="width: 100%">
+                <button type="submit" class="btn btn-primary" style="width: 100%">Submit</button>
             </div>
         </form>
     </div>
@@ -308,42 +310,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <script>
     function validateForm() {
+        console.log('HERE');
+        // document.getElementById('nameError').textContent = '';
+        // document.getElementById('surnameError').textContent = '';
+        // document.getElementById('emailError').textContent = '';
+        // document.getElementById('passwordError').textContent = '';
+        // document.getElementById('roleError').textContent = '';
 
-        document.getElementById('nameError').textContent = '';
-        document.getElementById('surnameError').textContent = '';
-        document.getElementById('emailError').textContent = '';
-        document.getElementById('passwordError').textContent = '';
-        document.getElementById('roleError').textContent = '';
+        // var name = document.getElementById('name').value;
+        // var surname = document.getElementById('surname').value;
+        // var email = document.getElementById('email').value;
+        // var password = document.getElementById('password').value;
+        // var roleError =  document.getElementById('roleError').value;
+        // var role =  document.getElementById('role').value;
 
-        var name = document.getElementById('name').value;
-        var surname = document.getElementById('surname').value;
-        var email = document.getElementById('email').value;
-        var password = document.getElementById('password').value;
-        var roleError =  document.getElementById('roleError').value;
-        var role =  document.getElementById('role').value;
+        // if (name === '') {
+        //     document.getElementById('nameError').textContent = 'Meno je povinné';
+        //     return false;
+        // }
+        // if (surname === '') {
+        //     document.getElementById('surnameError').textContent = 'Priezvisko je povinné';
+        //     return false;
+        // }
 
-        if (name === '') {
-            document.getElementById('nameError').textContent = 'Meno je povinné';
-            return false;
-        }
-        if (surname === '') {
-            document.getElementById('surnameError').textContent = 'Priezvisko je povinné';
-            return false;
-        }
-
-        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            document.getElementById('emailError').textContent = 'Nesprávny tvar emailu';
-            return false;
-        }
-        if (password.length < 6) {
-            document.getElementById('passwordError').textContent = 'Heslo musí mať najmenej 6 znakov';
-            return false;
-        }
-        if (!role.checked){
-            roleError.textContent = "Vyberte rolu";
-            return false;
-        }
+        // var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        // if (!emailRegex.test(email)) {
+        //     document.getElementById('emailError').textContent = 'Nesprávny tvar emailu';
+        //     return false;
+        // }
+        // if (password.length < 6) {
+        //     document.getElementById('passwordError').textContent = 'Heslo musí mať najmenej 6 znakov';
+        //     return false;
+        // }
+        // if (!role.checked){
+        //     roleError.textContent = "Vyberte rolu";
+        //     return false;
+        // }
         return true;
     }
 </script>
