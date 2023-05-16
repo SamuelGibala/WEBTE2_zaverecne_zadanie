@@ -189,6 +189,7 @@ if (isset($_POST['set_id'])) {
 </script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="./fonts/SourceSansPro-Regular-normal.js"></script>
 <script src="./js/info_modal_pdf.js"></script>
 </body>
 </html>
