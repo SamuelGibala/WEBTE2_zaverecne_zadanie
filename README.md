@@ -3,7 +3,7 @@ Záverečné zadanie z predmetu Webové technológie 2 na FEI STU v letnom semes
 
 ### Todo list:
 
-- [ ] dvojjazyčnosť
+- [x] dvojjazyčnosť - Viktor
 - [x] prihlasovanie sa do aplikácie (študent, učiteľ) - Samo/Matúš
 - [x] GUI a funkcionalita študenta (vrátane matematického editora) - Matúš
 - [x] GUI a funkcionalita učiteľa - Samo
