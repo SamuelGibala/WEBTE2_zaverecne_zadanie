@@ -153,15 +153,15 @@ $localized_terms = [
         'EN' => 'Show detail'
     ],
     'list_students_assigned_tasks_count' => [
-        'SK' => 'Počet vygenerovaných úloh',
-        'EN' => 'Number of assigned tasks'
+        'SK' => 'Počet <br /> vyg. <br /> úloh',
+        'EN' => 'Number of<br />assigned<br />tasks'
     ],
     'list_students_finished_tasks_count' => [
-        'SK' => 'Počet odovzdaných úloh',
-        'EN' => 'Number of finished tasks'
+        'SK' => 'Počet<br />odovz.<br />úloh',
+        'EN' => 'Number of<br />finished<br />tasks'
     ],
     'list_students_points_count' => [
-        'SK' => 'Počet bodov',
+        'SK' => 'Počet<br />bodov',
         'EN' => 'Score'
     ],
     'student_detail' => [

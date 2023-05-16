@@ -89,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Home Page</title>
+    <title>Teacher home</title>
     <!-- Bootstrap CSS -->
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
@@ -99,6 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/table.css">
+    <link rel="stylesheet" href="./css/responsive.css">
     <style>
         .container {
             margin-left: 1px;
@@ -194,13 +195,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <a class="navbar-brand" href="#">
                 <img
                         src="https://am2023.sski.sk/wp-content/uploads/2023/01/feistu.png"
-                        height="40"
-                        alt=""
+                        alt="FEI logo"
                         loading="lazy"
+                        class="logos"
                 />
             </a>
 
-            <div style="margin: 0 auto"><?php echo get_localized('menu_header') ?></div>
+            <div style="margin: 0 auto"> <img src="flags/logo-no-background.png" class="logos" alt="e-FEIster"></div>
 
             <!-- Right links -->
             <ul class="navbar-nav d-flex flex-row">

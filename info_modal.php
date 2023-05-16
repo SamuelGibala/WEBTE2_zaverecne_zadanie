@@ -1,4 +1,4 @@
-<?php
+é=´9<?php
 function add_info_modal_btn() {
     echo 
     '<button type="button" class="btn btn-secondary btn-info-modal me-3" data-bs-toggle="modal" data-bs-target="#infoModal">
