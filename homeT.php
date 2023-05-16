@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $stmt->bindParam(1, $taskID);
                 $stmt->bindParam(2, $file);
                 $stmt->execute();
-                header("Location: ./homeT.php");
+                header("Location: ./taskT.php");
             }
         }
     }

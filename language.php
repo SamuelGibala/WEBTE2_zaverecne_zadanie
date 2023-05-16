@@ -117,7 +117,7 @@ $localized_terms = [
         'EN' => 'Surname'
     ],
     'form_role' => [
-        'SK' => 'Roľa',
+        'SK' => 'Rola',
         'EN' => 'Role'
     ],
     'create_user_role_student' => [
