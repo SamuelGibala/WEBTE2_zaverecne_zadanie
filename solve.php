@@ -93,7 +93,7 @@ elseif(isset($_POST['solution'])) {
     $stmt->bindParam(':score', $tot_score);
     $stmt->execute();
     $test = $stmt->fetch(PDO::FETCH_ASSOC);
-    header("Location: ./");
+    header("Location: ./completedS.php");
     exit();
 } 
 else {
