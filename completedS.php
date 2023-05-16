@@ -143,10 +143,7 @@ $tests = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 } 
                 else {
                     foreach ($tests as $item) {
-                        if ($item['tot_score'] == 1)
-                            $labelScore = $item['score'] . "/" . $item['tot_score'] . "bodu";
-                        else
-                            $labelScore = $item['score'] . "/" . $item['tot_score'] . " bodov";
+                        $labelScore = $item['score'] . "/" . $item['tot_score'] . " " . get_localized('student_detail_points');
                         echo 
                         '<li class="list-group-item d-flex justify-content-between align-items-center">
                             <span class="text-left">' . $item['task_name'] . '</span>

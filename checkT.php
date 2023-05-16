@@ -25,7 +25,8 @@ if (isset($_POST['id'])) {
     $stmt->bindParam(':id', $_POST['id']);
     $stmt->execute();
     $test = $stmt->fetch(PDO::FETCH_ASSOC);
-}else{
+}
+else {
     header("Location: ./");
     exit();
 }

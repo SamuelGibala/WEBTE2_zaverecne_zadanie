@@ -189,7 +189,16 @@ try {
                <tbody>
                    <?php
                     foreach ($rows as $row) {
-                        echo("<tr><td>{$row['user_id']}</td> <td>{$row['name']}</td> <td>{$row['surname']}</td><td>{$row['email']}</td><td>{$row['number_of_tasks']}</td><td>{$row['number_submit']}</td><td>{$row['total_score']}</td></tr> ");
+                        echo
+                        "<tr>
+                            <td>{$row['user_id']}</td>
+                            <td>{$row['name']}</td>
+                            <td>{$row['surname']}</td>
+                            <td>{$row['email']}</td>
+                            <td>{$row['number_of_tasks']}</td>
+                            <td>{$row['number_submit']}</td>
+                            <td>{$row['total_score']}</td>
+                        </tr> ";
                     }
                    ?>
                </tbody>

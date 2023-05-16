@@ -55,7 +55,7 @@ $localized_terms = [
     ],
     'login_btn' => [
         'SK' => 'Prihlásiť sa',
-        'EN' => 'Login'
+        'EN' => 'Log in'
     ],
     'err_name_req' => [
         'SK' => 'Meno je povinné',
@@ -139,15 +139,11 @@ $localized_terms = [
     ],
     'check_points' => [
         'SK' => 'Získané body:',
-        'EN' => 'Points:'
+        'EN' => 'Score:'
     ],
     'done_tasks_none_found' => [
         'SK' => 'Žiadne vypracované testy',
         'EN' => 'No finished tasks'
-    ],
-    'done_tasks_earned_points' => [
-        'SK' => '',
-        'EN' => ''
     ],
     'done_tasks_detail' => [
         'SK' => 'Nahliadnuť',
@@ -163,7 +159,7 @@ $localized_terms = [
     ],
     'list_students_points_count' => [
         'SK' => 'Počet bodov',
-        'EN' => 'Number of points'
+        'EN' => 'Score'
     ],
     'student_detail' => [
         'SK' => 'Detail Študenta',
@@ -227,7 +223,7 @@ $localized_terms = [
     ],
     'create_tasks_teacher_points' => [
         'SK' => 'Body',
-        'EN' => 'Points'
+        'EN' => 'Score'
     ],
     'create_tasks_teacher_submit_btn' => [
         'SK' => 'Vytvoriť',
