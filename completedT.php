@@ -174,10 +174,10 @@ try {
 <!--Main Navigation-->
 <!--Main layout-->
 <main style="margin-top: 50px">
-    <div class="container-lg pt-4 ms-5">
+    <div class="container-lg pt-4">
         <h2><?php echo get_localized('menu_list_students') ?></h2>
         <hr />
-        <div class="table-responsive">
+        <div class="container-md table-responsive ">
            <table id="studentTable" class="dataTable display" style="width:100%">
                 <thead>
                     <tr>

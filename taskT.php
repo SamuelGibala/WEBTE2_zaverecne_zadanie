@@ -66,11 +66,7 @@ try {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/table.css">
-    <style>
-        .container {
-            margin-left: 20px;
-        }
-    </style>
+
 </head>
 <body>
 <header>
@@ -171,7 +167,7 @@ try {
     <div class="container pt-4">
         <h2><?php echo get_localized('menu_list_tasks') ?></h2>
         <hr />
-        <div class="table-responsive">
+        <div class=" container-md table-responsive">
             <table id="example" class="dataTable display" style="width:100%">
                 <thead>
                 <tr>

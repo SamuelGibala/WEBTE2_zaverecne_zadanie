@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="./css/table.css">
     <style>
         .container {
-            margin-left: 20px;
+            margin-left: 1px;
             max-width: 400px;
             padding: 20px;
             border-radius: 5px;
