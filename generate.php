@@ -94,7 +94,7 @@ if (isset($_POST['set_id'])) {
                         class="list-group-item list-group-item-action py-2 ripple"
                 >
                     <i class="fa-solid fa-list"></i>
-                    <span><?php echo get_localized('menu_finished_tasks') ?></span>
+                    <span><?php echo get_localized('menu_done_tasks') ?></span>
                 </a>
             </div>
         </div>

@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $persons = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach ($persons as $person){
             if ($person['email'] === $email){
-                echo "<script>alert('" . get_localized('err_email_similary') . "'); window.location.href = './addPerson.php';</script>";
+                echo "<script>alert('" . get_localized('err_email_duplicit') . "'); window.location.href = './addPerson.php';</script>";
                 exit();
             }
         }

@@ -61,9 +61,9 @@ $localized_terms = [
         'SK' => 'Meno je povinné',
         'EN' => 'Name is required'
     ],
-    'err_email_similary'=> [
-        'SK' => 'Email sa už nachádza',
-        'EN' => 'Email is already use'
+    'err_email_duplicit'=> [
+        'SK' => 'Tento email sa už používa',
+        'EN' => 'User with this email already exists'
     ],
     'err_surname_req' => [
         'SK' => 'Priezvisko je povinné',

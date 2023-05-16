@@ -121,14 +121,13 @@ else {
                 />
             </a>
 
-            <div style="margin: 0 auto">
-                TESTY
-            </div>
+            <div style="margin: 0 auto"><?php echo get_localized('menu_header') ?></div>
 
             <!-- Right links -->
             <ul class="navbar-nav d-flex flex-row">
                 <!-- Notification dropdown -->
                 <?php get_menu_dropdown() ?>
+                <input type="hidden" name="id" form="lang_form" value="<?php echo $_POST['id'] ?>">
                 <li class="ms-4 nav-item navbar-text"><?php echo $_SESSION['email']?></li>
                 <li class="ms-3 nav-item navbar-text">
                     <a href="logout.php">
