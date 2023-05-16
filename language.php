@@ -23,25 +23,24 @@ function get_localized($term) {
         return 'Missing value';
 }
 
-function get_menu_dropdown() {
+function get_lang_dropdown() {
     echo 
-    '
-    <form action="" method="post" id="lang_form"></form>
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="./flags/' . $_SESSION['lang'] . '.png" alt="">
-        </a>
-        <ul class="dropdown-menu">
-            <li><button type="submit" form="lang_form" name="SK" class="btn dropdown-item d-flex justify-content-between">
-                <img src="./flags/SK.png" alt="slovak flag">
-                ' . get_localized('lang_slovak') . '
-            </button></li>
-            <li><button type="submit" form="lang_form" name="EN" class="btn dropdown-item d-flex justify-content-between">
-                <img src="./flags/EN.png" alt="english flag">
-                ' . get_localized('lang_english') . '
-            </button></li>
-        </ul>
-    </li>';
+        '<form action="" method="post" id="lang_form"></form>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="./flags/' . $_SESSION['lang'] . '.png" alt="">
+            </a>
+            <ul class="dropdown-menu">
+                <li><button type="submit" form="lang_form" name="SK" class="btn dropdown-item d-flex justify-content-between">
+                    <img src="./flags/SK.png" alt="slovak flag">
+                    ' . get_localized('lang_slovak') . '
+                </button></li>
+                <li><button type="submit" form="lang_form" name="EN" class="btn dropdown-item d-flex justify-content-between">
+                    <img src="./flags/EN.png" alt="english flag">
+                    ' . get_localized('lang_english') . '
+                </button></li>
+            </ul>
+        </li>';
 }
 
 $localized_terms = [
@@ -256,6 +255,10 @@ $localized_terms = [
     'download_csv' => [
         'SK' => 'Stiahni ako CSV',
         'EN' => 'Download as CSV'
+    ],
+    'download_pdf' => [
+        'SK' => 'Stiahni ako PDF',
+        'EN' => 'Download as PDF'
     ],
     'lang_slovak' => [
         'SK' => 'Slovenčina',

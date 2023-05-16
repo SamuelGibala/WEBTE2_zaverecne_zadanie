@@ -52,7 +52,7 @@ if (isset($_SESSION['email'])){
     <div class="position-relative">
         <div class="position-absolute top-0" style="right: 30px">
             <ul class="navbar-nav d-flex flex-row">
-                <?php get_menu_dropdown() ?>
+                <?php get_lang_dropdown() ?>
             </ul>
         </div>
     </div>

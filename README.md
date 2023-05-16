@@ -8,7 +8,7 @@ Záverečné zadanie z predmetu Webové technológie 2 na FEI STU v letnom semes
 - [x] GUI a funkcionalita študenta (vrátane matematického editora) - Matúš
 - [x] GUI a funkcionalita učiteľa - Samo
 - [x] kontrola správnosti výsledku - Samo/Matúš
-- [ ] export do csv a pdf
+- [x] export do csv a pdf - Viktor
 - [ ] docker balíček
 - [ ] používanie verzionovacieho systému všetkými členmi tímu - všetci
 - [ ] finalizácia aplikácie - všetci (nemusí byť rovnomerne rozdelené)

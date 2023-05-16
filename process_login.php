@@ -6,6 +6,7 @@ error_reporting(E_ALL);
 
 require_once('config.php');
 require_once('language.php');
+require_once('info_modal.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {

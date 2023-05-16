@@ -6,6 +6,7 @@ error_reporting(E_ALL);
 
 require_once('config.php');
 require_once('language.php');
+require_once('info_modal.php');
 
 switch_lang();
 
@@ -156,7 +157,8 @@ try {
             <!-- Right links -->
             <ul class="navbar-nav d-flex flex-row">
                 <!-- Notification dropdown -->
-                <?php get_menu_dropdown() ?>
+                <?php add_info_modal_btn() ?>
+                <?php get_lang_dropdown() ?>
                 <li class="ms-4 nav-item navbar-text"><?php echo $_SESSION['email']?></li>
                 <li class="ms-3 nav-item navbar-text">
                     <a href="logout.php">
@@ -209,7 +211,7 @@ try {
     </div>
     <input type="hidden" id="download_csv" value="<?php echo get_localized('download_csv') ?>">
 </main>
-
+<?php add_info_modal() ?>
 <script>
     <?php
     $js_array = json_encode($rows);
@@ -241,5 +243,7 @@ try {
     });
 </script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="./js/info_modal_pdf.js"></script>
 </body>
 </html>

@@ -41,3 +41,10 @@ body {
     overflow-x: auto;
 }
 
+.btn-info-modal {
+    --mdb-btn-padding-top: 0 !important;
+    --mdb-btn-padding-bottom: 0 !important;
+    --mdb-btn-padding-x: 0.5rem !important;
+    --mdb-btn-border-radius: 0.75rem !important;
+}
+
