@@ -253,6 +253,10 @@ $localized_terms = [
         'SK' => 'Vyplňte riešenie',
         'EN' => 'Fill out input'
     ],
+    'download_csv' => [
+        'SK' => 'Stiahni ako CSV',
+        'EN' => 'Download as CSV'
+    ],
     'lang_slovak' => [
         'SK' => 'Slovenčina',
         'EN' => 'Slovak'

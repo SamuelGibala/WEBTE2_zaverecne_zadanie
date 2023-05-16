@@ -63,8 +63,10 @@ try {
     <link href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.css">
     <link href="https://cdn.datatables.net/1.13.3/css/dataTables.bootstrap5.min.css">
     <link href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.bootstrap5.min.css">
-    <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.js"></script>
+    <!-- <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.js"></script> -->
     <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="./css/style.css">
@@ -170,11 +172,11 @@ try {
 <!--Main Navigation-->
 <!--Main layout-->
 <main style="margin-top: 50px">
-    <div class="container pt-4">
+    <div class="container-lg pt-4 ms-5">
         <h2><?php echo get_localized('menu_list_students') ?></h2>
         <hr />
         <div class="table-responsive">
-           <table id="example" class="dataTable display" style="width:100%">
+           <table id="studentTable" class="dataTable display" style="width:100%">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -205,6 +207,7 @@ try {
             </table>
         </div>
     </div>
+    <input type="hidden" id="download_csv" value="<?php echo get_localized('download_csv') ?>">
 </main>
 
 <script>
@@ -213,13 +216,24 @@ try {
     echo "var data = ". $js_array . ";\n";
     ?>
     $(document).ready( function () {
-        table = $('#example').DataTable({
+        table = $('#studentTable').DataTable({
             order: [[2, 'asc']],
             "pagingType": "full_numbers",
-            "bInfo" : false
+            "bInfo" : false,
+            dom: "<'row'<'col-sm-12 col-md-6'><'col-sm-12 col-md-6'f>>" +
+             "<'row'<'col-sm-12'tr>>" +
+             "<'row'<'col-sm-12 col-md-5'B><'col-sm-12 col-md-7'p>>",
+            buttons: [
+                {
+                    extend: 'csvHtml5',
+                    text: document.getElementById('download_csv').value,
+                    className: 'btn btn-success mt-2',
+                    filename: 'list-of-students'
+                }
+            ]
         });
     });
-    $('#example tbody').on('click', 'tr', function() {
+    $('#studentTable tbody').on('click', 'tr', function() {
         var data = table.row(this).data();
         var id = data[0];
         console.log(id);
