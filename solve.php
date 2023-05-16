@@ -93,7 +93,7 @@ elseif(isset($_POST['solution'])) {
     $stmt->bindParam(':score', $tot_score);
     $stmt->execute();
     $test = $stmt->fetch(PDO::FETCH_ASSOC);
-    header("Location: ./");
+    header("Location: ./completedS.php");
     exit();
 } 
 else {
@@ -105,7 +105,7 @@ else {
 <!doctype html>
 <html lang="sk">
 <head>
-    <title>Home Page</title>
+    <title>Test solver</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
@@ -126,6 +126,7 @@ else {
             rel="stylesheet"
     />
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/responsive.css">
     <style>
         body {
             --keycap-height: 2.5rem;
@@ -183,14 +184,14 @@ else {
 
             <a class="navbar-brand" href="#">
                 <img
-                    src="https://am2023.sski.sk/wp-content/uploads/2023/01/feistu.png"
-                    height="40"
-                    alt=""
-                    loading="lazy"
+                        src="https://am2023.sski.sk/wp-content/uploads/2023/01/feistu.png"
+                        alt="FEI logo"
+                        loading="lazy"
+                        class="logos"
                 />
             </a>
 
-            <div style="margin: 0 auto"><?php echo get_localized('menu_header') ?></div>
+            <div style="margin: 0 auto"> <img src="flags/logo-no-background.png" class="logos" alt="e-FEIster"></div>
 
             <!-- Right links -->
             <ul class="navbar-nav d-flex flex-row">

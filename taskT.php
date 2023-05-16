@@ -66,6 +66,7 @@ try {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/table.css">
+    <link rel="stylesheet" href="./css/responsive.css">
     <style>
         .container {
             margin-left: 20px;
@@ -139,14 +140,14 @@ try {
 
             <a class="navbar-brand" href="#">
                 <img
-                    src="https://am2023.sski.sk/wp-content/uploads/2023/01/feistu.png"
-                    height="40"
-                    alt=""
-                    loading="lazy"
+                        src="https://am2023.sski.sk/wp-content/uploads/2023/01/feistu.png"
+                        alt="FEI logo"
+                        loading="lazy"
+                        class="logos"
                 />
             </a>
 
-            <div style="margin: 0 auto"><?php echo get_localized('menu_header') ?></div>
+            <div style="margin: 0 auto"> <img src="flags/logo-no-background.png" class="logos" alt="e-FEIster"></div>
 
             <!-- Right links -->
             <ul class="navbar-nav d-flex flex-row">

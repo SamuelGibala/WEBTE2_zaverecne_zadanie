@@ -51,7 +51,7 @@ try {
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Home Page</title>
+    <title>Completed tests</title>
     <!-- Bootstrap CSS -->
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -72,6 +72,7 @@ try {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/table.css">
+    <link rel="stylesheet" href="./css/responsive.css">
     <style>
         .container {
             margin-left: 20px;
@@ -145,14 +146,14 @@ try {
 
             <a class="navbar-brand" href="#">
                 <img
-                    src="https://am2023.sski.sk/wp-content/uploads/2023/01/feistu.png"
-                    height="40"
-                    alt=""
-                    loading="lazy"
+                        src="https://am2023.sski.sk/wp-content/uploads/2023/01/feistu.png"
+                        alt="FEI logo"
+                        loading="lazy"
+                        class="logos"
                 />
             </a>
 
-            <div style="margin: 0 auto"><?php echo get_localized('menu_header') ?></div>
+            <div style="margin: 0 auto"> <img src="flags/logo-no-background.png" class="logos" alt="e-FEIster"></div>
 
             <!-- Right links -->
             <ul class="navbar-nav d-flex flex-row">
@@ -174,10 +175,10 @@ try {
 <!--Main Navigation-->
 <!--Main layout-->
 <main style="margin-top: 50px">
-    <div class="container-lg pt-4 ms-5">
+    <div class="container-lg pt-4">
         <h2><?php echo get_localized('menu_list_students') ?></h2>
         <hr />
-        <div class="table-responsive">
+        <div class="container-md table-responsive ">
            <table id="studentTable" class="dataTable display" style="width:100%">
                 <thead>
                     <tr>
