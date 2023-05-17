@@ -268,5 +268,55 @@ $localized_terms = [
         'SK' => 'Angličtina',
         'EN' => 'English'
     ],
+    'info_modal_title' => [
+        'SK' => 'Návod na používanie aplikácie',
+        'EN' => 'Instructions for using the app'
+    ],
+    'info_modal_body' => [
+        'SK' => 
+        'Študent<br>
+        - Po prihlásení je možné v menu vľavo vybrať medzi priradenými úlohami na vypracovanie.<br>
+        - Pri výbere priradených úloh sú zobrazené aktuálne dostupné úlohy.<br>
+        - Z nich si študent môže v prvom kroku vygenerovať úlohu v prvej časti stránky s názvom "Dostupné testy"<br>
+        - Pri generovaní študent môže označiť minimálne jeden súbor, z ktorého/ktorých bude úloha generovaná<br>
+        - Po potvrdení študent presmerovaný naspäť na stránku priradených úloh, kde môže danú vygenerovanú úlohu vypracovať v druhej časti stránky s názvom "Testy na vypracovanie"<br>
+        - Po kliknutí na tlačidlo "Vypracovať" je zobrazené zadanie úlohy a v časti "Tvoje riešenie" má študent možnosť zadať riešenie zadania pomocou matematického editora. Pri ňom sa po kliknutí na symbol klávesnice zobrazí virtuálna klávesnica so všetkými potrebnými matematickými operáciami a znakmi.<br>
+        - Po stlačení tlačidla "Odoslať" je študent presmerovaný na stránku "Vypracované úlohy", kde má možnosť prehliadať už vypracované testy spolu so získaným ohodnotením.<br>
+        - Po kliknutí na tlačidlo "Nahliadnuť" sa študentovi zobrazí náhľad vypracovanej úlohy spolu so zadaným a správnym riešením<br>
+        - V hornej časti aplikácie sa nachádza sprava tlačidlo na odhlásenie, identifikátor prihláseného používateľa, rozbaľovacie menu na zmenu jazyka a informačné tlačidlo pre zobrazenie tohto dokumentu s možnosťou tlače do PDF<br>
+        <br>
+        Učiteľ<br>
+        - Po prihlásení je užívateľ presmerovaný do aplikácie konkrétne do nástroja na generovanie úloh.<br>
+        - Tu je možné po vyplnení formulára vytvoriť úlohu pre študentov s alebo bez dátumov začiatku platnosti, s bodovým ohodnotením a z vybraných dokumentov<br>
+        - Po vygenerovaní je používateľ presmerovaný na zoznam vygenerovaných úloh<br>
+        - Ďalej má používateľ možnosť prehliadať zoznam študentov. Po kliknutí na študenta je zobrazený detail jeho profilu spolu s vypracovanými úlohami<br>
+        - Po kliknutí na tlačidlo "Nahliadnuť" má používateľ možnosť nahliadnuť do odovzdaného testu, kde okrem iného vidí zadaný výsledok študenta<br>
+        - Tabuľku študentov je možné exportovať kliknutím na tlačidlo "Stiahni ako CSV" do csv formátu<br>
+        - Učiteľ, ako správca aplikácie má možnosť pridať ďalšieho poúžívateľa, študednta alebo učiteľa<br>
+        - V hornej časti aplikácie sa nachádza sprava tlačidlo na odhlásenie, identifikátor prihláseného používateľa, rozbaľovacie menu na zmenu jazyka a informačné tlačidlo pre zobrazenie tohto dokumentu s možnosťou tlače do PDF<br>
+        - Pri pridaní nového testu je potrebné dodržať štruktúru podľa už existujúcich LaTex dokumentov, rovnako ako pri prípadnej grafickej podobe zadania nastaviť správne cesty k obrázku podľa príslušnej použitej architektúry!<br>',
+        'EN' => 
+        'Student<br>
+        - After logging in, it is possible to select among the assigned tasks to work on in the menu on the left.<br>
+        - When you select the assigned tasks, the currently available tasks are displayed.<br>
+        - From these, the student can generate a task in the first step in the first part of the page called "Available tests"<br>
+        - When generating, the student can indicate at least one file from which the assignment(s) will be generated<br>
+        - After confirmation, the student is redirected back to the Assignments page, where he/she can work out the generated assignment in the second part of the page called "Tests to work out"<br>
+        - After clicking on the "Elaborate" button, the assignment is displayed and in the "Your Solution" section the student has the option to enter a solution to the assignment using the math editor. When clicking on the keyboard symbol, a virtual keyboard with all the necessary mathematical operations and characters is displayed.<br>
+        - After pressing the "Submit" button, the student is redirected to the "Completed Assignments" page, where he/she has the possibility to browse through the already completed tests together with the grades obtained.<br>
+        - After clicking on the "Preview" button, the student will be presented with a preview of the completed assignment along with the given and correct solution.<br>
+        - At the top of the application there is a logout button on the right, a logged-in user identifier, a drop-down menu to change the language and an information button to view this document with the option to print it to PDF<br>
+        <br>
+        Teacher<br>
+        - After logging in, the user is redirected to the application specifically to the task generation tool.<br>
+        - Here, after filling in the form, it is possible to create an assignment for students with or without start dates, with a score and from selected documents<br>
+        - Once generated, the user is redirected to the list of generated jobs<br>
+        - Furthermore, the user has the possibility to browse the list of students. After clicking on a student, a detail of his/her profile is displayed along with the completed assignments<br>
+        - After clicking on the "Show detail" button, the user has the possibility to look into the submitted test, where, among other things, they can see the entered result of the student<br>
+        - The student spreadsheet can be exported to csv format by clicking the "Download as CSV" button<br>
+        - The teacher, as the administrator of the application, has the possibility to add another user, student or teacher<br>
+        - At the top of the application there is a logout button on the right, a logged-in user identifier, a drop-down menu to change the language and an information button to view this document with the option to print it to PDF<br>
+        - When adding a new test, it is necessary to follow the structure according to existing LaTex documents, as well as to set the correct image paths according to the respective architecture used for any graphical form of the assignment!<br>'
+    ],
 ];
 ?>

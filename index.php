@@ -5,6 +5,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require_once('language.php');
+require_once('info_modal.php');
 
 switch_lang();
 
@@ -25,6 +26,7 @@ if (isset($_SESSION['email'])){
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="./css/style.css">
       <style>
           html, body {
               height: 100%;
@@ -50,8 +52,9 @@ if (isset($_SESSION['email'])){
 </head>
 <body>
     <div class="position-relative">
-        <div class="position-absolute top-0" style="right: 30px">
+        <div class="position-absolute" style="top: 15px; right: 30px;">
             <ul class="navbar-nav d-flex flex-row">
+                <?php add_info_modal_btn() ?>
                 <?php get_lang_dropdown() ?>
             </ul>
         </div>
@@ -80,7 +83,11 @@ if (isset($_SESSION['email'])){
             </div>
         </div>
     </div>
+    <?php add_info_modal() ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="./fonts/SourceSansPro-Regular-normal.js"></script>
+<script src="./js/info_modal_pdf.js"></script>
 </body>
 </html>
