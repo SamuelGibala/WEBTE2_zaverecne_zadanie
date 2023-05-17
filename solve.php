@@ -197,6 +197,7 @@ else {
             <ul class="navbar-nav d-flex flex-row">
                 <!-- Notification dropdown -->
                 <?php add_info_modal_btn() ?>
+                <input type="hidden" name="id" form="lang_form" value="<?php echo $_POST['id'] ?>">
                 <?php get_lang_dropdown() ?>
                 <li class="ms-4 nav-item navbar-text"><?php echo $_SESSION['email']?></li>
                 <li class="ms-3 nav-item navbar-text">
