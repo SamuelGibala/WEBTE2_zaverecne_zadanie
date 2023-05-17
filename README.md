@@ -13,5 +13,6 @@ Záverečné zadanie z predmetu Webové technológie 2 na FEI STU v letnom semes
 - [x] nainštalovanie dockera na server - Rudolf
 - [ ] používanie verzionovacieho systému všetkými členmi tímu - všetci
 - [ ] finalizácia aplikácie - všetci (nemusí byť rovnomerne rozdelené)
-- [ ] video
+- [x] video - Samo, Matúš (viac Matúš)
+
 
