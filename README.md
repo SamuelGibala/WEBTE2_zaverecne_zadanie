@@ -9,7 +9,7 @@ Záverečné zadanie z predmetu Webové technológie 2 na FEI STU v letnom semes
 - [x] GUI a funkcionalita učiteľa - Samo
 - [x] kontrola správnosti výsledku - Samo/Matúš
 - [x] export do csv a pdf - Viktor
-- [ ] docker balíček - Rudolf
+- [x] docker balíček - Rudolf
 - [x] nainštalovanie dockera na server - Rudolf
 - [ ] používanie verzionovacieho systému všetkými členmi tímu - všetci
 - [ ] finalizácia aplikácie - všetci (nemusí byť rovnomerne rozdelené)
